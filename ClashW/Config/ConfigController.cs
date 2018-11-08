@@ -81,15 +81,20 @@ namespace ClashW.Config
             if (yamlConfig == null)
             {
                 yamlConfig = YalmConfigManager.Instance.GetYamlConfig();
+                YalmConfigManager.Instance.SavedYamlConfigChangedEvent += new YalmConfigManager.SavedYamlConfigChanged(SavedYamlConfigChanged);
             }
             initClashWConfig();
         }
 
-        public void RefreshYamlConfig()
+        private void SavedYamlConfigChanged(YalmConfigManager yalmConfigManager, YamlConfig yamlConfig)
         {
-            yamlConfig = YalmConfigManager.Instance.GetYamlConfig();
-            clashApi.StopLoadLogMessage();
-            clashApi = new ClashApi($"http://{yamlConfig.ExternalController}");
+            var currentExternalController = yamlConfig.ExternalController;
+            this.yamlConfig = yamlConfig;
+            if(!yamlConfig.ExternalController.Equals(currentExternalController))
+            {
+                clashApi.StopLoadLogMessage();
+                clashApi.BaseUrl = $"http://{yamlConfig.ExternalController}";
+            }
         }
 
         private void initClashWConfig()

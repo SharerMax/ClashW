@@ -56,6 +56,7 @@ namespace ClashW.View
             configEditor.SetExteranlControllerSecret(externalControllerSecret);
             configEditor.SetLogLevel(logLevel);
             configEditor.Commit();
+            MessageBox.Show("保存成功", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void GeneralConfigForm_Load(object sender, EventArgs e)

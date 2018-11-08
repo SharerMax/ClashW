@@ -53,7 +53,7 @@
             // socksNumericUpDown
             // 
             this.socksNumericUpDown.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.socksNumericUpDown.Location = new System.Drawing.Point(177, 14);
+            this.socksNumericUpDown.Location = new System.Drawing.Point(178, 14);
             this.socksNumericUpDown.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.socksNumericUpDown.Maximum = new decimal(new int[] {
             65535,
@@ -66,7 +66,7 @@
             0,
             0});
             this.socksNumericUpDown.Name = "socksNumericUpDown";
-            this.socksNumericUpDown.Size = new System.Drawing.Size(357, 39);
+            this.socksNumericUpDown.Size = new System.Drawing.Size(356, 39);
             this.socksNumericUpDown.TabIndex = 1;
             this.socksNumericUpDown.Value = new decimal(new int[] {
             1,
@@ -80,7 +80,7 @@
             this.socksPortLabel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.socksPortLabel.Location = new System.Drawing.Point(13, 10);
             this.socksPortLabel.Name = "socksPortLabel";
-            this.socksPortLabel.Size = new System.Drawing.Size(158, 48);
+            this.socksPortLabel.Size = new System.Drawing.Size(159, 48);
             this.socksPortLabel.TabIndex = 0;
             this.socksPortLabel.Text = "Socks端口：";
             this.socksPortLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -124,7 +124,7 @@
             this.externalSecretLabel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.externalSecretLabel.Location = new System.Drawing.Point(13, 250);
             this.externalSecretLabel.Name = "externalSecretLabel";
-            this.externalSecretLabel.Size = new System.Drawing.Size(158, 48);
+            this.externalSecretLabel.Size = new System.Drawing.Size(159, 48);
             this.externalSecretLabel.TabIndex = 11;
             this.externalSecretLabel.Text = "API密匙：";
             this.externalSecretLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -132,9 +132,9 @@
             // externalSecretTextbox
             // 
             this.externalSecretTextbox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.externalSecretTextbox.Location = new System.Drawing.Point(177, 253);
+            this.externalSecretTextbox.Location = new System.Drawing.Point(178, 253);
             this.externalSecretTextbox.Name = "externalSecretTextbox";
-            this.externalSecretTextbox.Size = new System.Drawing.Size(357, 39);
+            this.externalSecretTextbox.Size = new System.Drawing.Size(356, 39);
             this.externalSecretTextbox.TabIndex = 10;
             // 
             // httpPortLabel
@@ -143,7 +143,7 @@
             this.httpPortLabel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.httpPortLabel.Location = new System.Drawing.Point(13, 58);
             this.httpPortLabel.Name = "httpPortLabel";
-            this.httpPortLabel.Size = new System.Drawing.Size(158, 48);
+            this.httpPortLabel.Size = new System.Drawing.Size(159, 48);
             this.httpPortLabel.TabIndex = 2;
             this.httpPortLabel.Text = "HTTP端口：";
             this.httpPortLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -151,7 +151,7 @@
             // httpNumericUpDown
             // 
             this.httpNumericUpDown.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.httpNumericUpDown.Location = new System.Drawing.Point(177, 61);
+            this.httpNumericUpDown.Location = new System.Drawing.Point(178, 61);
             this.httpNumericUpDown.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -163,7 +163,7 @@
             0,
             0});
             this.httpNumericUpDown.Name = "httpNumericUpDown";
-            this.httpNumericUpDown.Size = new System.Drawing.Size(357, 39);
+            this.httpNumericUpDown.Size = new System.Drawing.Size(356, 39);
             this.httpNumericUpDown.TabIndex = 3;
             this.httpNumericUpDown.Value = new decimal(new int[] {
             1,
@@ -177,7 +177,7 @@
             this.allowLanLabel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.allowLanLabel.Location = new System.Drawing.Point(13, 106);
             this.allowLanLabel.Name = "allowLanLabel";
-            this.allowLanLabel.Size = new System.Drawing.Size(158, 48);
+            this.allowLanLabel.Size = new System.Drawing.Size(159, 48);
             this.allowLanLabel.TabIndex = 4;
             this.allowLanLabel.Text = "局域网访问：";
             this.allowLanLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -186,9 +186,9 @@
             // 
             this.allowLanCheckBox.AutoSize = true;
             this.allowLanCheckBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.allowLanCheckBox.Location = new System.Drawing.Point(177, 109);
+            this.allowLanCheckBox.Location = new System.Drawing.Point(178, 109);
             this.allowLanCheckBox.Name = "allowLanCheckBox";
-            this.allowLanCheckBox.Size = new System.Drawing.Size(357, 42);
+            this.allowLanCheckBox.Size = new System.Drawing.Size(356, 42);
             this.allowLanCheckBox.TabIndex = 5;
             this.allowLanCheckBox.Text = "允许";
             this.allowLanCheckBox.UseVisualStyleBackColor = true;
@@ -199,7 +199,7 @@
             this.logLevelLabel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.logLevelLabel.Location = new System.Drawing.Point(13, 154);
             this.logLevelLabel.Name = "logLevelLabel";
-            this.logLevelLabel.Size = new System.Drawing.Size(158, 48);
+            this.logLevelLabel.Size = new System.Drawing.Size(159, 48);
             this.logLevelLabel.TabIndex = 6;
             this.logLevelLabel.Text = "日志等级：";
             this.logLevelLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -214,7 +214,7 @@
             "WARNING",
             "ERROR",
             "DEBUG"});
-            this.logLevelComboBox.Location = new System.Drawing.Point(177, 157);
+            this.logLevelComboBox.Location = new System.Drawing.Point(178, 157);
             this.logLevelComboBox.Name = "logLevelComboBox";
             this.logLevelComboBox.Size = new System.Drawing.Size(344, 39);
             this.logLevelComboBox.TabIndex = 7;
@@ -225,7 +225,7 @@
             this.externalContrallLabel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.externalContrallLabel.Location = new System.Drawing.Point(13, 202);
             this.externalContrallLabel.Name = "externalContrallLabel";
-            this.externalContrallLabel.Size = new System.Drawing.Size(158, 48);
+            this.externalContrallLabel.Size = new System.Drawing.Size(159, 48);
             this.externalContrallLabel.TabIndex = 8;
             this.externalContrallLabel.Text = "API地址：";
             this.externalContrallLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -233,9 +233,9 @@
             // externalContrallTextbox
             // 
             this.externalContrallTextbox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.externalContrallTextbox.Location = new System.Drawing.Point(177, 205);
+            this.externalContrallTextbox.Location = new System.Drawing.Point(178, 205);
             this.externalContrallTextbox.Name = "externalContrallTextbox";
-            this.externalContrallTextbox.Size = new System.Drawing.Size(357, 39);
+            this.externalContrallTextbox.Size = new System.Drawing.Size(356, 39);
             this.externalContrallTextbox.TabIndex = 9;
             // 
             // panel1
@@ -273,6 +273,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(14F, 31F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(547, 389);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.tableLayoutPanel1);

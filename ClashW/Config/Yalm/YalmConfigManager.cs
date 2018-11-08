@@ -16,7 +16,11 @@ namespace ClashW.Config.Yaml
         private static YalmConfigManager instance = null;
         private static readonly object padlock = new object();
         private const string CONFIG_FILE_PATH = @"./config.yml";
-        
+
+        public delegate void SavedYamlConfigChanged(YalmConfigManager sender, YamlConfig yamlConfig);
+        public event SavedYamlConfigChanged SavedYamlConfigChangedEvent;
+
+
         private YalmConfigManager()
         {
 
@@ -81,6 +85,7 @@ namespace ClashW.Config.Yaml
                 yamlConfigFileStreamWriter.Flush();
                 yamlConfigFileStreamWriter.Close();
             }
+            SavedYamlConfigChangedEvent?.Invoke(this, yamlConfig);
         }
 
        

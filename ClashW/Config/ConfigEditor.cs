@@ -65,7 +65,6 @@ namespace ClashW.Config
         public void Commit()
         {
             YalmConfigManager.Instance.SaveYamlConfigFile(yamlConfig);
-            ConfigController.Instance.RefreshYamlConfig();
             ProcessManager.ClashProcessManager.Instance.Restart();
         }
     }
