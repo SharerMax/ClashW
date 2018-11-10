@@ -11,7 +11,11 @@ namespace ClashW.Config.Yaml.Dao
     {
         [YamlMember(Alias = "uuid", ApplyNamingConventions = false)]
         public string Uuid { get; set; }
-        [YamlMember(Alias = "alertId", ApplyNamingConventions = false)]
+        [YamlMember(Alias = "alterId", ApplyNamingConventions = false)]
         public string AlterId { get; set; }
+        [YamlMember(Alias = "network", ApplyNamingConventions = false)]
+        public string Network { get; set; }
+        [YamlMember(Alias = "ws-path", ApplyNamingConventions = false)]
+        public string WsPath { get; set; }
     }
 }

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Diagnostics;
 using System.IO;
 using System.Threading;
+using System.Text.RegularExpressions;
 
 namespace ClashW.ProcessManager
 {
@@ -111,11 +112,18 @@ namespace ClashW.ProcessManager
         {
             if(!String.IsNullOrEmpty(dataReceivedEventArgs.Data))
             {
-                if(dataReceivedEventArgs.Data.StartsWith("ERROR"))
+                string rawMessages = dataReceivedEventArgs.Data;
+                string regex = @"time=(\S+) level=(\S+) msg=(.+)";
+                Match matched = Regex.Match(rawMessages, regex);
+                string time = matched.Groups[1].Value;
+                string loglevel = matched.Groups[2].Value.ToUpper();
+                string msg = matched.Groups[3].Value;
+
+                if(loglevel.Equals("FATAL"))
                 {
-                    ProcessErrorEvnet?.Invoke(this, dataReceivedEventArgs.Data);
+                    ProcessErrorEvnet?.Invoke(this, msg);
                 }
-                var outputData = dataReceivedEventArgs.Data + Environment.NewLine;
+                var outputData = rawMessages + Environment.NewLine;
                 ThreadPool.QueueUserWorkItem(writeLogToFile, outputData);
                 OutputEvent?.Invoke(outputData);
             }

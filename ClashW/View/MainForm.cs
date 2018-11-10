@@ -52,31 +52,37 @@ namespace ClashW.View
                 case PROXY_TYPE_HTTP:
                     currentEditProxyType = PROXY_TYPE_HTTP;
                     HideSSConfigPanel();
-                    HideSocksConfigPanel();
+                    HideTLSConfigPanel();
+                    HideVmessConfigPanel();
                     break;
                 case PROXY_TYPE_HTTPS:
                     currentEditProxyType = PROXY_TYPE_HTTPS;
                     HideSSConfigPanel();
-                    HideSocksConfigPanel();
+                    HideTLSConfigPanel();
+                    HideVmessConfigPanel();
                     break;
                 case PROXY_TYPE_SOCKS5:
                     currentEditProxyType = PROXY_TYPE_SOCKS5;
-                    ShowSocksConfigPanel();
+                    ShowTLSConfigPanel();
                     HideSSConfigPanel();
+                    HideVmessConfigPanel();
                     break;
                 case PROXY_TYPE_SHADOWSOCKS:
                     currentEditProxyType = PROXY_TYPE_SHADOWSOCKS;
-                    HideSocksConfigPanel();
+                    HideTLSConfigPanel();
                     ShowSSConfigPanel();
+                    HideVmessConfigPanel();
                     break;
                 case PROXY_TYPE_VMESS:
                     currentEditProxyType = PROXY_TYPE_VMESS;
                     HideSSConfigPanel();
-                    HideSocksConfigPanel();
+                    ShowTLSConfigPanel();
+                    ShowVmessConfigPanel();
                     break;
                 default:
                     HideSSConfigPanel();
-                    HideSocksConfigPanel();
+                    HideTLSConfigPanel();
+                    HideVmessConfigPanel();
                     break;
             }
         }
@@ -97,19 +103,35 @@ namespace ClashW.View
             }
         }
 
-        private void HideSocksConfigPanel()
+        private void HideTLSConfigPanel()
         {
-            if(socks5ConfigPanel.Visible)
+            if(tlsConfigPanel.Visible)
             {
-                socks5ConfigPanel.Visible = false;
+                tlsConfigPanel.Visible = false;
             }
         }
 
-        private void ShowSocksConfigPanel()
+        private void ShowTLSConfigPanel()
         {
-            if(!socks5ConfigPanel.Visible)
+            if(!tlsConfigPanel.Visible)
             {
-                socks5ConfigPanel.Visible = true;
+                tlsConfigPanel.Visible = true;
+            }
+        }
+
+        private void ShowVmessConfigPanel()
+        {
+            if(!vmessConfigPanel.Visible)
+            {
+                vmessConfigPanel.Visible = true;
+            }
+        }
+
+        private void HideVmessConfigPanel()
+        {
+            if (vmessConfigPanel.Visible)
+            {
+                vmessConfigPanel.Visible = false;
             }
         }
 
@@ -150,8 +172,8 @@ namespace ClashW.View
                     break;
                 case PROXY_TYPE_SOCKS5:
                     newProxy.Type = "socks5";
-                    newProxy.TLS = socksTLScheckBox.Checked;
-                    newProxy.SkipCertVerify = socksSkipVerifyCheckBox.Checked;
+                    newProxy.TLS = tlsCheckBox.Checked;
+                    newProxy.SkipCertVerify = tlsSkipVerifyCheckBox.Checked;
                     break;
                 case PROXY_TYPE_SHADOWSOCKS:
                     var cipher = ssCipherComboBox.SelectedItem.ToString().Trim();
@@ -178,6 +200,16 @@ namespace ClashW.View
                     break;
                 case PROXY_TYPE_VMESS:
                     newProxy.Type = "vmess";
+                    newProxy.Uuid = vmessUUIDTextBox.Text.Trim();
+                    newProxy.AlterId = vmessAlterIDTextBox.Text.Trim();
+                    newProxy.Network = vmessNetworkTypeComboBox.SelectedItem as string;
+                    newProxy.TLS = tlsCheckBox.Checked;
+                    newProxy.SkipCertVerify = tlsSkipVerifyCheckBox.Checked;
+                    if(newProxy.Network.Equals("WS"))
+                    {
+                        newProxy.WsPath = vmessWsPathTextBox.Text.Trim();
+                    }
+                    
                     break;
                 default:
                     break;
@@ -217,6 +249,11 @@ namespace ClashW.View
         {
             proxyList = ConfigController.Instance.GetProxyList();
             runningMode = ConfigController.Instance.GetRunningMode();
+            
+            typeComboBox.SelectedIndex = 0;
+            vmessChiperComboBox.SelectedIndex = 0;
+            vmessNetworkTypeComboBox.SelectedIndex = 0;
+
             if (proxyList != null)
             {
                 refreshRunningModeUI();
@@ -418,5 +455,16 @@ namespace ClashW.View
             proxyListBox.SelectedIndex = proxyList.Count - 1;
         }
 
+        private void vmessNetworkTypeComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if(vmessNetworkTypeComboBox.SelectedItem.Equals("WS"))
+            {
+                vmessWsPathTextBox.Enabled = true;
+            }
+            else
+            {
+                vmessWsPathTextBox.Enabled = false;
+            }
+        }
     }
 }

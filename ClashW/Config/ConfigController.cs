@@ -175,7 +175,7 @@ namespace ClashW.Config
         {
             var content = clashApi.ProxyInfo("Proxy");
             Dictionary<string, object> valuse = JsonConvert.DeserializeObject<Dictionary<string, object>>(content);
-            if(valuse.ContainsKey("now"))
+            if(valuse !=null && valuse.ContainsKey("now"))
             {
                 var proxyName = valuse["now"];
                 foreach(Proxy proxy in yamlConfig.ProxyList)

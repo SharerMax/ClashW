@@ -58,10 +58,22 @@
             this.advanceConfigPanel = new System.Windows.Forms.Panel();
             this.saveConfigTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.saveConfigButton = new System.Windows.Forms.Button();
-            this.socks5ConfigPanel = new System.Windows.Forms.Panel();
-            this.socksTLScheckBox = new System.Windows.Forms.CheckBox();
-            this.socksSkipVerifyCheckBox = new System.Windows.Forms.CheckBox();
+            this.tlsConfigPanel = new System.Windows.Forms.Panel();
+            this.tlsCheckBox = new System.Windows.Forms.CheckBox();
+            this.tlsSkipVerifyCheckBox = new System.Windows.Forms.CheckBox();
             this.proxyListBox = new System.Windows.Forms.ListBox();
+            this.vmessConfigPanel = new System.Windows.Forms.Panel();
+            this.vmessTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.vmessChiperLabel = new System.Windows.Forms.Label();
+            this.vmessChiperComboBox = new System.Windows.Forms.ComboBox();
+            this.vmessNetworkTypeLabel = new System.Windows.Forms.Label();
+            this.vmessNetworkTypeComboBox = new System.Windows.Forms.ComboBox();
+            this.vmessWsPathLabel = new System.Windows.Forms.Label();
+            this.vmessWsPathTextBox = new System.Windows.Forms.TextBox();
+            this.vmessALterIdLabel = new System.Windows.Forms.Label();
+            this.vmessUUIDLabel = new System.Windows.Forms.Label();
+            this.vmessUUIDTextBox = new System.Windows.Forms.TextBox();
+            this.vmessAlterIDTextBox = new System.Windows.Forms.TextBox();
             this.basicConfigTableLayoutPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.serverPoxtNumericUpDown)).BeginInit();
             this.ssConfigPanel.SuspendLayout();
@@ -69,7 +81,9 @@
             this.proxyModePanel.SuspendLayout();
             this.advanceConfigPanel.SuspendLayout();
             this.saveConfigTableLayoutPanel.SuspendLayout();
-            this.socks5ConfigPanel.SuspendLayout();
+            this.tlsConfigPanel.SuspendLayout();
+            this.vmessConfigPanel.SuspendLayout();
+            this.vmessTableLayoutPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // addButton
@@ -221,7 +235,7 @@
             // 
             this.ssConfigPanel.Controls.Add(this.ssConfigTableLayoutPanel);
             this.ssConfigPanel.Dock = System.Windows.Forms.DockStyle.Top;
-            this.ssConfigPanel.Location = new System.Drawing.Point(0, 0);
+            this.ssConfigPanel.Location = new System.Drawing.Point(0, 239);
             this.ssConfigPanel.Name = "ssConfigPanel";
             this.ssConfigPanel.Size = new System.Drawing.Size(580, 201);
             this.ssConfigPanel.TabIndex = 4;
@@ -414,8 +428,9 @@
             // advanceConfigPanel
             // 
             this.advanceConfigPanel.Controls.Add(this.saveConfigTableLayoutPanel);
-            this.advanceConfigPanel.Controls.Add(this.socks5ConfigPanel);
+            this.advanceConfigPanel.Controls.Add(this.tlsConfigPanel);
             this.advanceConfigPanel.Controls.Add(this.ssConfigPanel);
+            this.advanceConfigPanel.Controls.Add(this.vmessConfigPanel);
             this.advanceConfigPanel.Location = new System.Drawing.Point(319, 233);
             this.advanceConfigPanel.Name = "advanceConfigPanel";
             this.advanceConfigPanel.Size = new System.Drawing.Size(580, 402);
@@ -428,7 +443,7 @@
             this.saveConfigTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 31.03448F));
             this.saveConfigTableLayoutPanel.Controls.Add(this.saveConfigButton, 1, 0);
             this.saveConfigTableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Top;
-            this.saveConfigTableLayoutPanel.Location = new System.Drawing.Point(0, 262);
+            this.saveConfigTableLayoutPanel.Location = new System.Drawing.Point(0, 501);
             this.saveConfigTableLayoutPanel.Name = "saveConfigTableLayoutPanel";
             this.saveConfigTableLayoutPanel.Padding = new System.Windows.Forms.Padding(0, 10, 0, 0);
             this.saveConfigTableLayoutPanel.RowCount = 1;
@@ -447,37 +462,37 @@
             this.saveConfigButton.UseVisualStyleBackColor = true;
             this.saveConfigButton.Click += new System.EventHandler(this.saveConfigButton_Click);
             // 
-            // socks5ConfigPanel
+            // tlsConfigPanel
             // 
-            this.socks5ConfigPanel.Controls.Add(this.socksTLScheckBox);
-            this.socks5ConfigPanel.Controls.Add(this.socksSkipVerifyCheckBox);
-            this.socks5ConfigPanel.Dock = System.Windows.Forms.DockStyle.Top;
-            this.socks5ConfigPanel.Location = new System.Drawing.Point(0, 201);
-            this.socks5ConfigPanel.Name = "socks5ConfigPanel";
-            this.socks5ConfigPanel.Size = new System.Drawing.Size(580, 61);
-            this.socks5ConfigPanel.TabIndex = 8;
+            this.tlsConfigPanel.Controls.Add(this.tlsCheckBox);
+            this.tlsConfigPanel.Controls.Add(this.tlsSkipVerifyCheckBox);
+            this.tlsConfigPanel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.tlsConfigPanel.Location = new System.Drawing.Point(0, 440);
+            this.tlsConfigPanel.Name = "tlsConfigPanel";
+            this.tlsConfigPanel.Size = new System.Drawing.Size(580, 61);
+            this.tlsConfigPanel.TabIndex = 8;
             // 
-            // socksTLScheckBox
+            // tlsCheckBox
             // 
-            this.socksTLScheckBox.AutoSize = true;
-            this.socksTLScheckBox.Dock = System.Windows.Forms.DockStyle.Right;
-            this.socksTLScheckBox.Location = new System.Drawing.Point(304, 0);
-            this.socksTLScheckBox.Name = "socksTLScheckBox";
-            this.socksTLScheckBox.Size = new System.Drawing.Size(86, 61);
-            this.socksTLScheckBox.TabIndex = 1;
-            this.socksTLScheckBox.Text = "TLS";
-            this.socksTLScheckBox.UseVisualStyleBackColor = true;
+            this.tlsCheckBox.AutoSize = true;
+            this.tlsCheckBox.Dock = System.Windows.Forms.DockStyle.Right;
+            this.tlsCheckBox.Location = new System.Drawing.Point(304, 0);
+            this.tlsCheckBox.Name = "tlsCheckBox";
+            this.tlsCheckBox.Size = new System.Drawing.Size(86, 61);
+            this.tlsCheckBox.TabIndex = 1;
+            this.tlsCheckBox.Text = "TLS";
+            this.tlsCheckBox.UseVisualStyleBackColor = true;
             // 
-            // socksSkipVerifyCheckBox
+            // tlsSkipVerifyCheckBox
             // 
-            this.socksSkipVerifyCheckBox.AutoSize = true;
-            this.socksSkipVerifyCheckBox.Dock = System.Windows.Forms.DockStyle.Right;
-            this.socksSkipVerifyCheckBox.Location = new System.Drawing.Point(390, 0);
-            this.socksSkipVerifyCheckBox.Name = "socksSkipVerifyCheckBox";
-            this.socksSkipVerifyCheckBox.Size = new System.Drawing.Size(190, 61);
-            this.socksSkipVerifyCheckBox.TabIndex = 0;
-            this.socksSkipVerifyCheckBox.Text = "跳过证书验证";
-            this.socksSkipVerifyCheckBox.UseVisualStyleBackColor = true;
+            this.tlsSkipVerifyCheckBox.AutoSize = true;
+            this.tlsSkipVerifyCheckBox.Dock = System.Windows.Forms.DockStyle.Right;
+            this.tlsSkipVerifyCheckBox.Location = new System.Drawing.Point(390, 0);
+            this.tlsSkipVerifyCheckBox.Name = "tlsSkipVerifyCheckBox";
+            this.tlsSkipVerifyCheckBox.Size = new System.Drawing.Size(190, 61);
+            this.tlsSkipVerifyCheckBox.TabIndex = 0;
+            this.tlsSkipVerifyCheckBox.Text = "跳过证书验证";
+            this.tlsSkipVerifyCheckBox.UseVisualStyleBackColor = true;
             // 
             // proxyListBox
             // 
@@ -489,6 +504,151 @@
             this.proxyListBox.Size = new System.Drawing.Size(240, 593);
             this.proxyListBox.TabIndex = 7;
             this.proxyListBox.SelectedIndexChanged += new System.EventHandler(this.proxyListBox_SelectedIndexChanged);
+            // 
+            // vmessConfigPanel
+            // 
+            this.vmessConfigPanel.Controls.Add(this.vmessTableLayoutPanel);
+            this.vmessConfigPanel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.vmessConfigPanel.Location = new System.Drawing.Point(0, 0);
+            this.vmessConfigPanel.Name = "vmessConfigPanel";
+            this.vmessConfigPanel.Size = new System.Drawing.Size(580, 239);
+            this.vmessConfigPanel.TabIndex = 2;
+            // 
+            // vmessTableLayoutPanel
+            // 
+            this.vmessTableLayoutPanel.ColumnCount = 2;
+            this.vmessTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
+            this.vmessTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 70F));
+            this.vmessTableLayoutPanel.Controls.Add(this.vmessAlterIDTextBox, 0, 1);
+            this.vmessTableLayoutPanel.Controls.Add(this.vmessUUIDTextBox, 0, 0);
+            this.vmessTableLayoutPanel.Controls.Add(this.vmessUUIDLabel, 0, 0);
+            this.vmessTableLayoutPanel.Controls.Add(this.vmessALterIdLabel, 0, 1);
+            this.vmessTableLayoutPanel.Controls.Add(this.vmessWsPathTextBox, 1, 4);
+            this.vmessTableLayoutPanel.Controls.Add(this.vmessWsPathLabel, 0, 4);
+            this.vmessTableLayoutPanel.Controls.Add(this.vmessNetworkTypeComboBox, 1, 3);
+            this.vmessTableLayoutPanel.Controls.Add(this.vmessNetworkTypeLabel, 0, 3);
+            this.vmessTableLayoutPanel.Controls.Add(this.vmessChiperComboBox, 1, 2);
+            this.vmessTableLayoutPanel.Controls.Add(this.vmessChiperLabel, 0, 2);
+            this.vmessTableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.vmessTableLayoutPanel.Location = new System.Drawing.Point(0, 0);
+            this.vmessTableLayoutPanel.Name = "vmessTableLayoutPanel";
+            this.vmessTableLayoutPanel.RowCount = 5;
+            this.vmessTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 48F));
+            this.vmessTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 48F));
+            this.vmessTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 48F));
+            this.vmessTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 48F));
+            this.vmessTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 48F));
+            this.vmessTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.vmessTableLayoutPanel.Size = new System.Drawing.Size(580, 239);
+            this.vmessTableLayoutPanel.TabIndex = 0;
+            // 
+            // vmessChiperLabel
+            // 
+            this.vmessChiperLabel.AutoSize = true;
+            this.vmessChiperLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.vmessChiperLabel.Location = new System.Drawing.Point(3, 96);
+            this.vmessChiperLabel.Name = "vmessChiperLabel";
+            this.vmessChiperLabel.Size = new System.Drawing.Size(168, 48);
+            this.vmessChiperLabel.TabIndex = 6;
+            this.vmessChiperLabel.Text = "加密类型：";
+            this.vmessChiperLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // vmessChiperComboBox
+            // 
+            this.vmessChiperComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.vmessChiperComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.vmessChiperComboBox.FormattingEnabled = true;
+            this.vmessChiperComboBox.Items.AddRange(new object[] {
+            "AUTO",
+            "AES-128-GCM",
+            "CHACHA20-POLY1305",
+            "NONE"});
+            this.vmessChiperComboBox.Location = new System.Drawing.Point(177, 99);
+            this.vmessChiperComboBox.Name = "vmessChiperComboBox";
+            this.vmessChiperComboBox.Size = new System.Drawing.Size(400, 39);
+            this.vmessChiperComboBox.TabIndex = 9;
+            // 
+            // vmessNetworkTypeLabel
+            // 
+            this.vmessNetworkTypeLabel.AutoSize = true;
+            this.vmessNetworkTypeLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.vmessNetworkTypeLabel.Location = new System.Drawing.Point(3, 144);
+            this.vmessNetworkTypeLabel.Name = "vmessNetworkTypeLabel";
+            this.vmessNetworkTypeLabel.Size = new System.Drawing.Size(168, 48);
+            this.vmessNetworkTypeLabel.TabIndex = 10;
+            this.vmessNetworkTypeLabel.Text = "网络类型：";
+            this.vmessNetworkTypeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // vmessNetworkTypeComboBox
+            // 
+            this.vmessNetworkTypeComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.vmessNetworkTypeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.vmessNetworkTypeComboBox.FormattingEnabled = true;
+            this.vmessNetworkTypeComboBox.Items.AddRange(new object[] {
+            "TCP",
+            "WS"});
+            this.vmessNetworkTypeComboBox.Location = new System.Drawing.Point(177, 147);
+            this.vmessNetworkTypeComboBox.Name = "vmessNetworkTypeComboBox";
+            this.vmessNetworkTypeComboBox.Size = new System.Drawing.Size(400, 39);
+            this.vmessNetworkTypeComboBox.TabIndex = 11;
+            this.vmessNetworkTypeComboBox.SelectedIndexChanged += new System.EventHandler(this.vmessNetworkTypeComboBox_SelectedIndexChanged);
+            // 
+            // vmessWsPathLabel
+            // 
+            this.vmessWsPathLabel.AutoSize = true;
+            this.vmessWsPathLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.vmessWsPathLabel.Location = new System.Drawing.Point(3, 192);
+            this.vmessWsPathLabel.Name = "vmessWsPathLabel";
+            this.vmessWsPathLabel.Size = new System.Drawing.Size(168, 48);
+            this.vmessWsPathLabel.TabIndex = 12;
+            this.vmessWsPathLabel.Text = "WS路径：";
+            this.vmessWsPathLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // vmessWsPathTextBox
+            // 
+            this.vmessWsPathTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.vmessWsPathTextBox.Location = new System.Drawing.Point(177, 195);
+            this.vmessWsPathTextBox.Name = "vmessWsPathTextBox";
+            this.vmessWsPathTextBox.Size = new System.Drawing.Size(400, 39);
+            this.vmessWsPathTextBox.TabIndex = 16;
+            // 
+            // vmessALterIdLabel
+            // 
+            this.vmessALterIdLabel.AutoSize = true;
+            this.vmessALterIdLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.vmessALterIdLabel.Location = new System.Drawing.Point(3, 48);
+            this.vmessALterIdLabel.Name = "vmessALterIdLabel";
+            this.vmessALterIdLabel.Size = new System.Drawing.Size(168, 48);
+            this.vmessALterIdLabel.TabIndex = 17;
+            this.vmessALterIdLabel.Text = "AlterID：";
+            this.vmessALterIdLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // vmessUUIDLabel
+            // 
+            this.vmessUUIDLabel.AutoSize = true;
+            this.vmessUUIDLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.vmessUUIDLabel.Location = new System.Drawing.Point(3, 0);
+            this.vmessUUIDLabel.Name = "vmessUUIDLabel";
+            this.vmessUUIDLabel.Size = new System.Drawing.Size(168, 48);
+            this.vmessUUIDLabel.TabIndex = 18;
+            this.vmessUUIDLabel.Text = "UUID：";
+            this.vmessUUIDLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // vmessUUIDTextBox
+            // 
+            this.vmessUUIDTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.vmessUUIDTextBox.Location = new System.Drawing.Point(177, 3);
+            this.vmessUUIDTextBox.Name = "vmessUUIDTextBox";
+            this.vmessUUIDTextBox.Size = new System.Drawing.Size(400, 39);
+            this.vmessUUIDTextBox.TabIndex = 19;
+            // 
+            // vmessAlterIDTextBox
+            // 
+            this.vmessAlterIDTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.vmessAlterIDTextBox.Location = new System.Drawing.Point(177, 51);
+            this.vmessAlterIDTextBox.Name = "vmessAlterIDTextBox";
+            this.vmessAlterIDTextBox.Size = new System.Drawing.Size(400, 39);
+            this.vmessAlterIDTextBox.TabIndex = 20;
             // 
             // MainForm
             // 
@@ -519,8 +679,11 @@
             this.proxyModePanel.PerformLayout();
             this.advanceConfigPanel.ResumeLayout(false);
             this.saveConfigTableLayoutPanel.ResumeLayout(false);
-            this.socks5ConfigPanel.ResumeLayout(false);
-            this.socks5ConfigPanel.PerformLayout();
+            this.tlsConfigPanel.ResumeLayout(false);
+            this.tlsConfigPanel.PerformLayout();
+            this.vmessConfigPanel.ResumeLayout(false);
+            this.vmessTableLayoutPanel.ResumeLayout(false);
+            this.vmessTableLayoutPanel.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -556,8 +719,20 @@
         private System.Windows.Forms.RadioButton ruleModeRadioButton;
         private System.Windows.Forms.ListBox proxyListBox;
         private System.Windows.Forms.NumericUpDown serverPoxtNumericUpDown;
-        private System.Windows.Forms.Panel socks5ConfigPanel;
-        private System.Windows.Forms.CheckBox socksTLScheckBox;
-        private System.Windows.Forms.CheckBox socksSkipVerifyCheckBox;
+        private System.Windows.Forms.Panel tlsConfigPanel;
+        private System.Windows.Forms.CheckBox tlsCheckBox;
+        private System.Windows.Forms.CheckBox tlsSkipVerifyCheckBox;
+        private System.Windows.Forms.Panel vmessConfigPanel;
+        private System.Windows.Forms.TableLayoutPanel vmessTableLayoutPanel;
+        private System.Windows.Forms.TextBox vmessWsPathTextBox;
+        private System.Windows.Forms.Label vmessWsPathLabel;
+        private System.Windows.Forms.ComboBox vmessNetworkTypeComboBox;
+        private System.Windows.Forms.Label vmessNetworkTypeLabel;
+        private System.Windows.Forms.ComboBox vmessChiperComboBox;
+        private System.Windows.Forms.Label vmessChiperLabel;
+        private System.Windows.Forms.Label vmessUUIDLabel;
+        private System.Windows.Forms.Label vmessALterIdLabel;
+        private System.Windows.Forms.TextBox vmessAlterIDTextBox;
+        private System.Windows.Forms.TextBox vmessUUIDTextBox;
     }
 }

@@ -44,16 +44,22 @@ namespace ClashW
 
         private static void application_exit(object sender, EventArgs e)
         {
-            trayMenu.Close();
+            trayMenu?.Close();
             ClashProcessManager.Instance.Kill();
         }
 
         private static void clashProcessError(ClashProcessManager clashProcessManager, string error)
         {
+           
             if(trayMenu != null)
             {
                 trayMenu.ShowErrorMessage("ERROR", error);
             }
+            var errorMessage = error + Environment.NewLine + "退出程序";
+            MessageBox.Show(error, "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            Application.Exit();
+            Environment.Exit(-1);
+            
         }
     }
 }

@@ -113,11 +113,12 @@ namespace ClashW.View
                 var proxyCount = selectableProxyNameList.Count;
                
                 menuItems = new MenuItem[selectableProxyNameList.Count];
+
                 for(var i = 0; i < proxyCount; i++)
                 {
                     menuItems[i] = new MenuItem(selectableProxyNameList[i], new EventHandler(proxyNodeItem_clicked));
                     menuItems[i].Tag = selectableProxyNameList[i];
-                    if(selectableProxyNameList[i].Equals(currentProxy.Name))
+                    if(currentProxy !=null && selectableProxyNameList[i].Equals(currentProxy.Name))
                     {
                         menuItems[i].Checked = true;
                         currentSelectedProxyMenuItem = menuItems[i];
