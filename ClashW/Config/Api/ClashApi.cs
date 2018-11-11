@@ -18,8 +18,13 @@ namespace ClashW.Config.Api
         private string baseUrl;
         public delegate void LogMessageHandler(ClashApi clashApi, LogMessage logMessage);
         public event LogMessageHandler LogMessageOutputEvent;
+        public delegate void TrafficInfoHandler(ClashApi clashApi, TrafficInfo trafficInfo);
+        public event TrafficInfoHandler TrafficInfoEvent;
         public Thread loadLogMessageThread;
+        public Thread loadTrafficInfoThread;
+
         private volatile bool stopLoadLogMessage = true;
+        private volatile bool stopLoadTrafficInfo = true;
         public string BaseUrl
         {
             get
@@ -110,6 +115,56 @@ namespace ClashW.Config.Api
                         }
                         
                     } while (byteRead > 0 && !stopLoadLogMessage);
+                }
+            }
+        }
+
+        public void StartLoadTrafficInfo()
+        {
+            if (stopLoadTrafficInfo)
+            {
+                stopLoadTrafficInfo = false;
+                loadTrafficInfoThread = new Thread(new ThreadStart(loadTrafficInfo));
+                loadTrafficInfoThread.Start();
+            }
+        }
+
+        public void StopLoadTrafficInfo()
+        {
+            if (!stopLoadTrafficInfo && loadTrafficInfoThread.ThreadState != ThreadState.Stopped)
+            {
+                stopLoadTrafficInfo = true;
+            }
+        }
+
+        private void loadTrafficInfo()
+        {
+            WebRequest request = WebRequest.Create($"{baseUrl}/traffic");
+            request.Method = "GET";
+            const int BUFFER_SIZE = 1 * 1024;
+            using (var response = request.GetResponse())
+            {
+                using (var responseStream = response.GetResponseStream())
+                {
+
+                    int byteRead = -1;
+                    do
+                    {
+                        try
+                        {
+                            var buffer = new byte[BUFFER_SIZE];
+                            byteRead = responseStream.Read(buffer, 0, BUFFER_SIZE);
+                            var trafficInfoJson = Encoding.Default.GetString(buffer);
+                            var trafficInfo = JsonConvert.DeserializeObject<TrafficInfo>(trafficInfoJson);
+                            TrafficInfoEvent?.Invoke(this, trafficInfo);
+                            System.Diagnostics.Debug.WriteLine(trafficInfoJson);
+                        }
+                        catch (Exception exception)
+                        {
+                            System.Diagnostics.Debug.WriteLine(exception.Message);
+                        }
+
+                    } while (byteRead > 0 && !stopLoadTrafficInfo);
                 }
             }
         }

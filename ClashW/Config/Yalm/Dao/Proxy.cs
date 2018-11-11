@@ -20,7 +20,5 @@ namespace ClashW.Config.Yaml.Dao
         [YamlMember(Alias = "cipher", ApplyNamingConventions = false)]
         public string Cipher { get; set; }
 
-
-
     }
 }

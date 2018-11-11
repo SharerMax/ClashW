@@ -202,14 +202,15 @@ namespace ClashW.View
                     newProxy.Type = "vmess";
                     newProxy.Uuid = vmessUUIDTextBox.Text.Trim();
                     newProxy.AlterId = vmessAlterIDTextBox.Text.Trim();
-                    newProxy.Network = vmessNetworkTypeComboBox.SelectedItem as string;
                     newProxy.TLS = tlsCheckBox.Checked;
+                    newProxy.Cipher = vmessChiperComboBox.SelectedItem as string;
                     newProxy.SkipCertVerify = tlsSkipVerifyCheckBox.Checked;
                     if(newProxy.Network.Equals("WS"))
                     {
                         newProxy.WsPath = vmessWsPathTextBox.Text.Trim();
+                        newProxy.Network = vmessNetworkTypeComboBox.SelectedItem as string;
                     }
-                    
+
                     break;
                 default:
                     break;

@@ -18,6 +18,7 @@ namespace ClashW.View
         private MainForm mainForm;
         private LogForm logForm;
         private GeneralConfigForm generalConfigForm;
+        private TrafficForm trafficForm;
         private ContextMenu contextMenu;
         private MenuItem autoBootMenuItem;
         private MenuItem directRunningModeMenuItem;
@@ -29,6 +30,7 @@ namespace ClashW.View
         private MenuItem currentRunningModeMenuItem;
         private MenuItem proxyServerMenuItemGroup;
         private MenuItem generalConfigMenuItem;
+        private MenuItem trafficViewMenuItem;
         private RunningMode runningMode;
         private List<Proxy> proxyList;
         
@@ -79,7 +81,7 @@ namespace ClashW.View
             ConfigController.Instance.ProxyChangedEvent += new ConfigController.ProxyListChangedHandler(proxyListChanged);
 
             generalConfigMenuItem = new MenuItem("通用配置...", new EventHandler(generalConfigMenuItem_clicked));
-
+            trafficViewMenuItem = new MenuItem("流量...", new EventHandler(trafficViewMenuItem_clicked));
             contextMenu = new ContextMenu(new MenuItem[] {
                 systemProxyMenuItem,
                 new MenuItem("-"),
@@ -91,6 +93,7 @@ namespace ClashW.View
                 new MenuItem("-"),
                 logFormMenuItem,
                 generalConfigMenuItem,
+                trafficViewMenuItem,
                 new MenuItem("-"),
                 new MenuItem("退出", new EventHandler(exitMenuItem_clicked))
             });
@@ -222,6 +225,21 @@ namespace ClashW.View
 
             generalConfigForm.Show();
             generalConfigForm.Activate();
+        }
+
+        private void trafficViewMenuItem_clicked(object sender, EventArgs e)
+        {
+            if(trafficForm == null || trafficForm.IsDisposed)
+            {
+                trafficForm = new TrafficForm();
+            }
+            trafficForm.Show();
+            trafficForm.Activate();
+        }
+
+        private void showTrafficViewForm()
+        {
+
         }
 
         private void exitMenuItem_clicked(object sender, EventArgs e)

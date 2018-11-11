@@ -61,19 +61,19 @@
             this.tlsConfigPanel = new System.Windows.Forms.Panel();
             this.tlsCheckBox = new System.Windows.Forms.CheckBox();
             this.tlsSkipVerifyCheckBox = new System.Windows.Forms.CheckBox();
-            this.proxyListBox = new System.Windows.Forms.ListBox();
             this.vmessConfigPanel = new System.Windows.Forms.Panel();
             this.vmessTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.vmessChiperLabel = new System.Windows.Forms.Label();
-            this.vmessChiperComboBox = new System.Windows.Forms.ComboBox();
-            this.vmessNetworkTypeLabel = new System.Windows.Forms.Label();
-            this.vmessNetworkTypeComboBox = new System.Windows.Forms.ComboBox();
-            this.vmessWsPathLabel = new System.Windows.Forms.Label();
-            this.vmessWsPathTextBox = new System.Windows.Forms.TextBox();
-            this.vmessALterIdLabel = new System.Windows.Forms.Label();
-            this.vmessUUIDLabel = new System.Windows.Forms.Label();
-            this.vmessUUIDTextBox = new System.Windows.Forms.TextBox();
             this.vmessAlterIDTextBox = new System.Windows.Forms.TextBox();
+            this.vmessUUIDTextBox = new System.Windows.Forms.TextBox();
+            this.vmessUUIDLabel = new System.Windows.Forms.Label();
+            this.vmessALterIdLabel = new System.Windows.Forms.Label();
+            this.vmessWsPathTextBox = new System.Windows.Forms.TextBox();
+            this.vmessWsPathLabel = new System.Windows.Forms.Label();
+            this.vmessNetworkTypeComboBox = new System.Windows.Forms.ComboBox();
+            this.vmessNetworkTypeLabel = new System.Windows.Forms.Label();
+            this.vmessChiperComboBox = new System.Windows.Forms.ComboBox();
+            this.vmessChiperLabel = new System.Windows.Forms.Label();
+            this.proxyListBox = new System.Windows.Forms.ListBox();
             this.basicConfigTableLayoutPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.serverPoxtNumericUpDown)).BeginInit();
             this.ssConfigPanel.SuspendLayout();
@@ -494,17 +494,6 @@
             this.tlsSkipVerifyCheckBox.Text = "跳过证书验证";
             this.tlsSkipVerifyCheckBox.UseVisualStyleBackColor = true;
             // 
-            // proxyListBox
-            // 
-            this.proxyListBox.FormattingEnabled = true;
-            this.proxyListBox.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.proxyListBox.ItemHeight = 31;
-            this.proxyListBox.Location = new System.Drawing.Point(26, 35);
-            this.proxyListBox.Name = "proxyListBox";
-            this.proxyListBox.Size = new System.Drawing.Size(240, 593);
-            this.proxyListBox.TabIndex = 7;
-            this.proxyListBox.SelectedIndexChanged += new System.EventHandler(this.proxyListBox_SelectedIndexChanged);
-            // 
             // vmessConfigPanel
             // 
             this.vmessConfigPanel.Controls.Add(this.vmessTableLayoutPanel);
@@ -542,16 +531,87 @@
             this.vmessTableLayoutPanel.Size = new System.Drawing.Size(580, 239);
             this.vmessTableLayoutPanel.TabIndex = 0;
             // 
-            // vmessChiperLabel
+            // vmessAlterIDTextBox
             // 
-            this.vmessChiperLabel.AutoSize = true;
-            this.vmessChiperLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.vmessChiperLabel.Location = new System.Drawing.Point(3, 96);
-            this.vmessChiperLabel.Name = "vmessChiperLabel";
-            this.vmessChiperLabel.Size = new System.Drawing.Size(168, 48);
-            this.vmessChiperLabel.TabIndex = 6;
-            this.vmessChiperLabel.Text = "加密类型：";
-            this.vmessChiperLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.vmessAlterIDTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.vmessAlterIDTextBox.Location = new System.Drawing.Point(177, 51);
+            this.vmessAlterIDTextBox.Name = "vmessAlterIDTextBox";
+            this.vmessAlterIDTextBox.Size = new System.Drawing.Size(400, 39);
+            this.vmessAlterIDTextBox.TabIndex = 20;
+            // 
+            // vmessUUIDTextBox
+            // 
+            this.vmessUUIDTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.vmessUUIDTextBox.Location = new System.Drawing.Point(177, 3);
+            this.vmessUUIDTextBox.Name = "vmessUUIDTextBox";
+            this.vmessUUIDTextBox.Size = new System.Drawing.Size(400, 39);
+            this.vmessUUIDTextBox.TabIndex = 19;
+            // 
+            // vmessUUIDLabel
+            // 
+            this.vmessUUIDLabel.AutoSize = true;
+            this.vmessUUIDLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.vmessUUIDLabel.Location = new System.Drawing.Point(3, 0);
+            this.vmessUUIDLabel.Name = "vmessUUIDLabel";
+            this.vmessUUIDLabel.Size = new System.Drawing.Size(168, 48);
+            this.vmessUUIDLabel.TabIndex = 18;
+            this.vmessUUIDLabel.Text = "UUID：";
+            this.vmessUUIDLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // vmessALterIdLabel
+            // 
+            this.vmessALterIdLabel.AutoSize = true;
+            this.vmessALterIdLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.vmessALterIdLabel.Location = new System.Drawing.Point(3, 48);
+            this.vmessALterIdLabel.Name = "vmessALterIdLabel";
+            this.vmessALterIdLabel.Size = new System.Drawing.Size(168, 48);
+            this.vmessALterIdLabel.TabIndex = 17;
+            this.vmessALterIdLabel.Text = "AlterID：";
+            this.vmessALterIdLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // vmessWsPathTextBox
+            // 
+            this.vmessWsPathTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.vmessWsPathTextBox.Location = new System.Drawing.Point(177, 195);
+            this.vmessWsPathTextBox.Name = "vmessWsPathTextBox";
+            this.vmessWsPathTextBox.Size = new System.Drawing.Size(400, 39);
+            this.vmessWsPathTextBox.TabIndex = 16;
+            // 
+            // vmessWsPathLabel
+            // 
+            this.vmessWsPathLabel.AutoSize = true;
+            this.vmessWsPathLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.vmessWsPathLabel.Location = new System.Drawing.Point(3, 192);
+            this.vmessWsPathLabel.Name = "vmessWsPathLabel";
+            this.vmessWsPathLabel.Size = new System.Drawing.Size(168, 48);
+            this.vmessWsPathLabel.TabIndex = 12;
+            this.vmessWsPathLabel.Text = "WS路径：";
+            this.vmessWsPathLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // vmessNetworkTypeComboBox
+            // 
+            this.vmessNetworkTypeComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.vmessNetworkTypeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.vmessNetworkTypeComboBox.FormattingEnabled = true;
+            this.vmessNetworkTypeComboBox.Items.AddRange(new object[] {
+            "TCP",
+            "WS"});
+            this.vmessNetworkTypeComboBox.Location = new System.Drawing.Point(177, 147);
+            this.vmessNetworkTypeComboBox.Name = "vmessNetworkTypeComboBox";
+            this.vmessNetworkTypeComboBox.Size = new System.Drawing.Size(400, 39);
+            this.vmessNetworkTypeComboBox.TabIndex = 11;
+            this.vmessNetworkTypeComboBox.SelectedIndexChanged += new System.EventHandler(this.vmessNetworkTypeComboBox_SelectedIndexChanged);
+            // 
+            // vmessNetworkTypeLabel
+            // 
+            this.vmessNetworkTypeLabel.AutoSize = true;
+            this.vmessNetworkTypeLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.vmessNetworkTypeLabel.Location = new System.Drawing.Point(3, 144);
+            this.vmessNetworkTypeLabel.Name = "vmessNetworkTypeLabel";
+            this.vmessNetworkTypeLabel.Size = new System.Drawing.Size(168, 48);
+            this.vmessNetworkTypeLabel.TabIndex = 10;
+            this.vmessNetworkTypeLabel.Text = "网络类型：";
+            this.vmessNetworkTypeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // vmessChiperComboBox
             // 
@@ -568,87 +628,27 @@
             this.vmessChiperComboBox.Size = new System.Drawing.Size(400, 39);
             this.vmessChiperComboBox.TabIndex = 9;
             // 
-            // vmessNetworkTypeLabel
+            // vmessChiperLabel
             // 
-            this.vmessNetworkTypeLabel.AutoSize = true;
-            this.vmessNetworkTypeLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.vmessNetworkTypeLabel.Location = new System.Drawing.Point(3, 144);
-            this.vmessNetworkTypeLabel.Name = "vmessNetworkTypeLabel";
-            this.vmessNetworkTypeLabel.Size = new System.Drawing.Size(168, 48);
-            this.vmessNetworkTypeLabel.TabIndex = 10;
-            this.vmessNetworkTypeLabel.Text = "网络类型：";
-            this.vmessNetworkTypeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.vmessChiperLabel.AutoSize = true;
+            this.vmessChiperLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.vmessChiperLabel.Location = new System.Drawing.Point(3, 96);
+            this.vmessChiperLabel.Name = "vmessChiperLabel";
+            this.vmessChiperLabel.Size = new System.Drawing.Size(168, 48);
+            this.vmessChiperLabel.TabIndex = 6;
+            this.vmessChiperLabel.Text = "加密类型：";
+            this.vmessChiperLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // vmessNetworkTypeComboBox
+            // proxyListBox
             // 
-            this.vmessNetworkTypeComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.vmessNetworkTypeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.vmessNetworkTypeComboBox.FormattingEnabled = true;
-            this.vmessNetworkTypeComboBox.Items.AddRange(new object[] {
-            "TCP",
-            "WS"});
-            this.vmessNetworkTypeComboBox.Location = new System.Drawing.Point(177, 147);
-            this.vmessNetworkTypeComboBox.Name = "vmessNetworkTypeComboBox";
-            this.vmessNetworkTypeComboBox.Size = new System.Drawing.Size(400, 39);
-            this.vmessNetworkTypeComboBox.TabIndex = 11;
-            this.vmessNetworkTypeComboBox.SelectedIndexChanged += new System.EventHandler(this.vmessNetworkTypeComboBox_SelectedIndexChanged);
-            // 
-            // vmessWsPathLabel
-            // 
-            this.vmessWsPathLabel.AutoSize = true;
-            this.vmessWsPathLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.vmessWsPathLabel.Location = new System.Drawing.Point(3, 192);
-            this.vmessWsPathLabel.Name = "vmessWsPathLabel";
-            this.vmessWsPathLabel.Size = new System.Drawing.Size(168, 48);
-            this.vmessWsPathLabel.TabIndex = 12;
-            this.vmessWsPathLabel.Text = "WS路径：";
-            this.vmessWsPathLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // vmessWsPathTextBox
-            // 
-            this.vmessWsPathTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.vmessWsPathTextBox.Location = new System.Drawing.Point(177, 195);
-            this.vmessWsPathTextBox.Name = "vmessWsPathTextBox";
-            this.vmessWsPathTextBox.Size = new System.Drawing.Size(400, 39);
-            this.vmessWsPathTextBox.TabIndex = 16;
-            // 
-            // vmessALterIdLabel
-            // 
-            this.vmessALterIdLabel.AutoSize = true;
-            this.vmessALterIdLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.vmessALterIdLabel.Location = new System.Drawing.Point(3, 48);
-            this.vmessALterIdLabel.Name = "vmessALterIdLabel";
-            this.vmessALterIdLabel.Size = new System.Drawing.Size(168, 48);
-            this.vmessALterIdLabel.TabIndex = 17;
-            this.vmessALterIdLabel.Text = "AlterID：";
-            this.vmessALterIdLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // vmessUUIDLabel
-            // 
-            this.vmessUUIDLabel.AutoSize = true;
-            this.vmessUUIDLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.vmessUUIDLabel.Location = new System.Drawing.Point(3, 0);
-            this.vmessUUIDLabel.Name = "vmessUUIDLabel";
-            this.vmessUUIDLabel.Size = new System.Drawing.Size(168, 48);
-            this.vmessUUIDLabel.TabIndex = 18;
-            this.vmessUUIDLabel.Text = "UUID：";
-            this.vmessUUIDLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // vmessUUIDTextBox
-            // 
-            this.vmessUUIDTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.vmessUUIDTextBox.Location = new System.Drawing.Point(177, 3);
-            this.vmessUUIDTextBox.Name = "vmessUUIDTextBox";
-            this.vmessUUIDTextBox.Size = new System.Drawing.Size(400, 39);
-            this.vmessUUIDTextBox.TabIndex = 19;
-            // 
-            // vmessAlterIDTextBox
-            // 
-            this.vmessAlterIDTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.vmessAlterIDTextBox.Location = new System.Drawing.Point(177, 51);
-            this.vmessAlterIDTextBox.Name = "vmessAlterIDTextBox";
-            this.vmessAlterIDTextBox.Size = new System.Drawing.Size(400, 39);
-            this.vmessAlterIDTextBox.TabIndex = 20;
+            this.proxyListBox.FormattingEnabled = true;
+            this.proxyListBox.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.proxyListBox.ItemHeight = 31;
+            this.proxyListBox.Location = new System.Drawing.Point(26, 35);
+            this.proxyListBox.Name = "proxyListBox";
+            this.proxyListBox.Size = new System.Drawing.Size(240, 593);
+            this.proxyListBox.TabIndex = 7;
+            this.proxyListBox.SelectedIndexChanged += new System.EventHandler(this.proxyListBox_SelectedIndexChanged);
             // 
             // MainForm
             // 

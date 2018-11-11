@@ -36,8 +36,8 @@ namespace ClashW.Config
         private YamlConfig yamlConfig;
         private ClashProcessManager clashProcessManager;
 
-        public delegate void TrafficChangedHandler(ConfigController configController);
-        public event TrafficChangedHandler TrafficChangedEvent;
+        //public delegate void TrafficChangedHandler(ConfigController configController);
+        //public event TrafficChangedHandler TrafficChangedEvent;
 
         public delegate void ProxyListChangedHandler(ConfigController configController, List<Proxy> proxyList);
         public event ProxyListChangedHandler ProxyChangedEvent;
@@ -272,6 +272,18 @@ namespace ClashW.Config
         {
             clashApi.LogMessageOutputEvent -= logMessageHandler;
             clashApi.StopLoadLogMessage();
+        }
+
+        public void StartLoadTrafficInfo(TrafficInfoHandler trafficChangedHandler)
+        {
+            clashApi.TrafficInfoEvent += trafficChangedHandler;
+            clashApi.StartLoadTrafficInfo();
+        }
+
+        public void StopLoadTrafficInfo(TrafficInfoHandler trafficChangedHandler)
+        {
+            clashApi.TrafficInfoEvent -= trafficChangedHandler;
+            clashApi.StopLoadTrafficInfo();
         }
 
         public int GetListenedSocksPort()
