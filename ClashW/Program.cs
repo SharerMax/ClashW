@@ -9,6 +9,7 @@ using ClashW.ProcessManager;
 using System.Drawing;
 using ClashW.Properties;
 using ClashW.Config.Yaml;
+using ClashW.Log;
 
 namespace ClashW
 {
@@ -23,6 +24,7 @@ namespace ClashW
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            Application.ThreadException += new System.Threading.ThreadExceptionEventHandler(applicationExceptionCause);
             ConfigController.EnsureRunningConfig();
             var clashProcessManager = ClashProcessManager.Instance;
             clashProcessManager.ProcessErrorEvnet += new ClashProcessManager.ProcessErrorHandler(clashProcessError);
@@ -46,6 +48,7 @@ namespace ClashW
         {
             trayMenu?.Close();
             ClashProcessManager.Instance.Kill();
+            Loger.Instance.Close();
         }
 
         private static void clashProcessError(ClashProcessManager clashProcessManager, string error)
@@ -60,6 +63,11 @@ namespace ClashW
             Application.Exit();
             Environment.Exit(-1);
             
+        }
+
+        private static void applicationExceptionCause(object sender, System.Threading.ThreadExceptionEventArgs threadExceptionEventArgs)
+        {
+            Loger.Instance.Write(threadExceptionEventArgs.Exception);
         }
     }
 }

@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Threading;
 using System.Text.RegularExpressions;
+using ClashW.Log;
 
 namespace ClashW.ProcessManager
 {
@@ -16,8 +17,6 @@ namespace ClashW.ProcessManager
         private static readonly object padlock = new object();
         private Process process = null;
         private const string PROMCSS_NMAE = @"./clash-win64";
-        private const string LOG_FILE = @"./outpout.log";
-        private StreamWriter logFileStreamWrite = null;
 
         public delegate void OutPutHandler(string output);
         public event OutPutHandler OutputEvent;
@@ -66,10 +65,6 @@ namespace ClashW.ProcessManager
                 process.StartInfo.Arguments = @"-d .";
                 process.OutputDataReceived += new DataReceivedEventHandler(process_data_received);
                 process.ErrorDataReceived += new DataReceivedEventHandler(process_data_received);
-                var logFileStream = File.Open(LOG_FILE, FileMode.OpenOrCreate, FileAccess.Write, FileShare.Read);
-                logFileStream.SetLength(0);
-                logFileStreamWrite = new StreamWriter(logFileStream);
-                logFileStreamWrite.AutoFlush = true;
                 process.Start();
                 process.BeginOutputReadLine();
                 process.BeginErrorReadLine();
@@ -98,7 +93,6 @@ namespace ClashW.ProcessManager
                 process.Close();
                 ProcessExitEvent?.Invoke(this);
             }
-            logFileStreamWrite.Close();
             process = null;
         }
 
@@ -124,16 +118,9 @@ namespace ClashW.ProcessManager
                     ProcessErrorEvnet?.Invoke(this, msg);
                 }
                 var outputData = rawMessages + Environment.NewLine;
-                ThreadPool.QueueUserWorkItem(writeLogToFile, outputData);
+                // ThreadPool.QueueUserWorkItem(writeLogToFile, outputData);
+                Loger.Instance.Write(rawMessages);
                 OutputEvent?.Invoke(outputData);
-            }
-        }
-
-        private void writeLogToFile(object log)
-        {
-            lock(padlock)
-            {
-                logFileStreamWrite.Write(log as string);
             }
         }
     }
