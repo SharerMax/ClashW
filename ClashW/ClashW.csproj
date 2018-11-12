@@ -95,7 +95,7 @@
     <Compile Include="Config\Yalm\Dao\Vmess.cs" />
     <Compile Include="Config\Yalm\YalmConfigManager.cs" />
     <Compile Include="Config\Yalm\Dao\YamlConfig.cs" />
-    <Compile Include="Log\Loger.cs" />
+    <Compile Include="Loger\Loger.cs" />
     <Compile Include="ProcessManager\ClashProcessManager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
