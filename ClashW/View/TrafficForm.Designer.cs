@@ -28,10 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.panel1 = new System.Windows.Forms.Panel();
             this.downloadInfoLabel = new System.Windows.Forms.Label();
             this.downLoadlabel = new System.Windows.Forms.Label();
@@ -93,25 +93,25 @@
             // 
             // trafficChart
             // 
-            chartArea2.AxisX.Title = "经过时间（秒）";
-            chartArea2.AxisY.Title = "速率";
-            chartArea2.Name = "TrafficChartArea";
-            this.trafficChart.ChartAreas.Add(chartArea2);
+            chartArea1.AxisX.Title = "经过时间（秒）";
+            chartArea1.AxisY.Title = "速率";
+            chartArea1.Name = "TrafficChartArea";
+            this.trafficChart.ChartAreas.Add(chartArea1);
             this.trafficChart.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend2.Name = "Legend1";
-            this.trafficChart.Legends.Add(legend2);
+            legend1.Name = "Legend1";
+            this.trafficChart.Legends.Add(legend1);
             this.trafficChart.Location = new System.Drawing.Point(0, 87);
             this.trafficChart.Name = "trafficChart";
-            series3.ChartArea = "TrafficChartArea";
-            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series3.Legend = "Legend1";
-            series3.Name = "上传";
-            series4.ChartArea = "TrafficChartArea";
-            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series4.Legend = "Legend1";
-            series4.Name = "下载";
-            this.trafficChart.Series.Add(series3);
-            this.trafficChart.Series.Add(series4);
+            series1.ChartArea = "TrafficChartArea";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series1.Legend = "Legend1";
+            series1.Name = "上传";
+            series2.ChartArea = "TrafficChartArea";
+            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series2.Legend = "Legend1";
+            series2.Name = "下载";
+            this.trafficChart.Series.Add(series1);
+            this.trafficChart.Series.Add(series2);
             this.trafficChart.Size = new System.Drawing.Size(1142, 634);
             this.trafficChart.TabIndex = 1;
             this.trafficChart.Text = "chart1";
@@ -127,7 +127,7 @@
             this.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "TrafficForm";
-            this.Text = "TrafficForm";
+            this.Text = "流量";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.TrafficForm_FormClosing);
             this.Load += new System.EventHandler(this.TrafficForm_Load);
             this.panel1.ResumeLayout(false);

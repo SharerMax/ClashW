@@ -52,7 +52,7 @@
             this.Controls.Add(this.logTextBox);
             this.Name = "LogForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "LogViewer";
+            this.Text = "日志";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.logForm_closing);
             this.Load += new System.EventHandler(this.LogForm_Load);
             this.ResumeLayout(false);

@@ -265,7 +265,7 @@ namespace ClashW.Config
         public void StartLoadMessage(LogMessageHandler logMessageHandler)
         {
             clashApi.LogMessageOutputEvent += logMessageHandler;
-            clashApi.LoadLogMessage();
+            clashApi.StartLoadLogMessage();
         }
 
         public void StopLoadMessage(LogMessageHandler logMessageHandler)

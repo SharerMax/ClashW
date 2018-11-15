@@ -1,4 +1,5 @@
 ﻿using ClashW.Config.Api.Dao;
+using ClashW.Log;
 using Newtonsoft.Json;
 using RestSharp;
 using System;
@@ -36,7 +37,7 @@ namespace ClashW.Config.Api
                 baseUrl = value;
                 if(restClient != null)
                 {
-                    //restClient.UseSynchronizationContext = true;
+                    // restClient.UseSynchronizationContext = true;
                     restClient.BaseUrl = new Uri(baseUrl);
                 }
             }
@@ -69,7 +70,7 @@ namespace ClashW.Config.Api
             return response.Content;
         }
 
-        public void LoadLogMessage()
+        public void StartLoadLogMessage()
         {
             if(stopLoadLogMessage)
             {
@@ -111,7 +112,7 @@ namespace ClashW.Config.Api
                             System.Diagnostics.Debug.WriteLine(message);
                         } catch(Exception exception)
                         {
-                            System.Diagnostics.Debug.WriteLine(exception.Message);
+                            Loger.Instance.Write(exception);
                         }
                         
                     } while (byteRead > 0 && !stopLoadLogMessage);
@@ -161,7 +162,7 @@ namespace ClashW.Config.Api
                         }
                         catch (Exception exception)
                         {
-                            System.Diagnostics.Debug.WriteLine(exception.Message);
+                            Loger.Instance.Write(exception);
                         }
 
                     } while (byteRead > 0 && !stopLoadTrafficInfo);
