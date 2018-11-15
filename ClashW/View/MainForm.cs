@@ -142,22 +142,27 @@ namespace ClashW.View
             var name = nameTextBox.Text.Trim();
             var server = serverTextBox.Text.Trim();
             var serverPort = (int)serverPoxtNumericUpDown.Value;
+            
 
             if(String.IsNullOrEmpty(name) || String.IsNullOrEmpty(server) || serverPort == 0 || String.IsNullOrEmpty(currentEditProxyType))
             {
                 MessageBox.Show("有未填写或选择的选项", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-           
-            foreach (Proxy proxy in proxyList)
+
+            var selectedIndex = proxyListBox.SelectedIndex;
+            if (proxyList[selectedIndex] == defaultProxy)
             {
-                if (proxy.Name.Equals(name))
+                foreach (Proxy proxy in proxyList)
                 {
-                    MessageBox.Show("代理名不可以重复", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
+                    if (proxy.Name.Equals(name))
+                    {
+                        MessageBox.Show("代理名不可以重复", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
                 }
             }
-            
+
             var newProxy = new Proxy();
             newProxy.Name = name;
             newProxy.Server = server;
@@ -205,7 +210,7 @@ namespace ClashW.View
                     newProxy.TLS = tlsCheckBox.Checked;
                     newProxy.Cipher = vmessChiperComboBox.SelectedItem as string;
                     newProxy.SkipCertVerify = tlsSkipVerifyCheckBox.Checked;
-                    if(newProxy.Network.Equals("WS"))
+                    if(vmessNetworkTypeComboBox.SelectedItem.Equals("WS"))
                     {
                         newProxy.WsPath = vmessWsPathTextBox.Text.Trim();
                         newProxy.Network = vmessNetworkTypeComboBox.SelectedItem as string;
@@ -217,11 +222,27 @@ namespace ClashW.View
 
             }
 
+            var proxyCount = defaultProxy == null ? proxyList.Count() : proxyList.Count() - 1;
+            if (selectedIndex < proxyCount)
+            {
+                ConfigEditor configEditor = ConfigController.GetConfigEditor();
+                configEditor.RemoveProxyByName(proxyList[selectedIndex].Name);
+                configEditor.AddProxy(selectedIndex, newProxy);
+                configEditor.Commit();
+                proxyList = ConfigController.Instance.GetProxyList();
+                defaultProxy = null;
+                refreshProxyList();
+                proxyListBox.SelectedIndex = selectedIndex;
+            }
+            else
+            {
+                proxyList = ConfigController.Instance.AddProxy(newProxy);
+                defaultProxy = null;
+                refreshProxyList();
+                proxyListBox.SelectedIndex = proxyList.Count - 1;
+            }
 
-            proxyList = ConfigController.Instance.AddProxy(newProxy);
-            defaultProxy = null;
-            refreshProxyList();
-            proxyListBox.SelectedIndex = proxyList.Count - 1;
+            
 
         }
 
@@ -400,6 +421,8 @@ namespace ClashW.View
                     break;
                 case "socks5":
                     typeComboBox.SelectedIndex = 2;
+                    tlsCheckBox.Checked = proxy.TLS;
+                    tlsSkipVerifyCheckBox.Checked = proxy.SkipCertVerify;
                     break;
                 case "ss":
                     typeComboBox.SelectedIndex = 3;
@@ -410,6 +433,13 @@ namespace ClashW.View
                     break;
                 case "vmess":
                     typeComboBox.SelectedIndex = 4;
+                    vmessUUIDTextBox.Text = proxy.Uuid;
+                    vmessAlterIDTextBox.Text = proxy.AlterId;
+                    vmessChiperComboBox.SelectedItem = proxy.Cipher;
+                    vmessNetworkTypeComboBox.SelectedItem = String.IsNullOrEmpty(proxy.Network) ? "TCP": proxy.Network;
+                    vmessWsPathTextBox.Text = proxy.WsPath;
+                    tlsCheckBox.Checked = proxy.TLS;
+                    tlsSkipVerifyCheckBox.Checked = proxy.SkipCertVerify;
                     break;
                 default:
                     break;
@@ -430,7 +460,8 @@ namespace ClashW.View
             {
                 proxyList.Remove(defaultProxy);
                 defaultProxy = null;
-            } else
+            }
+            else
             {
                 proxyList = ConfigController.Instance.RemoveProxy(proxyList[selectedIndex]);
             }

@@ -14,6 +14,7 @@ namespace ClashW.Config
         public ConfigEditor()
         {
             yamlConfig = YalmConfigManager.Instance.GetYamlConfig();
+            YalmConfigManager.Instance.SavedYamlConfigChangedEvent += new YalmConfigManager.SavedYamlConfigChanged(savedYamlConfig);
         }
 
         public void SetListenedHttpPort(int httpPort)
@@ -41,6 +42,51 @@ namespace ClashW.Config
             yamlConfig.Secret = secret;
         }
 
+        public void AddProxy(Proxy proxy)
+        {
+            yamlConfig.ProxyList.Add(proxy);
+            ConfigHelper.GenerateProxyGroup(yamlConfig);
+        }
+
+        public void AddProxy(int index, Proxy proxy)
+        {
+            if(index < 0)
+            {
+                throw new ArgumentException("index 不能小于0");
+            }
+
+            if(index > yamlConfig.ProxyList.Count)
+            {
+                throw new ArgumentOutOfRangeException($"index 超出范围，最大长度为{yamlConfig.ProxyList.Count}");
+            }
+
+            yamlConfig.ProxyList.Insert(index, proxy);
+        }
+
+        public void RemoveProxy(Proxy proxy)
+        {
+            yamlConfig.ProxyList.Remove(proxy);
+            ConfigHelper.GenerateProxyGroup(yamlConfig);
+        }
+
+        public void RemoveProxyByName(string name)
+        {
+            if(String.IsNullOrEmpty(name))
+            {
+                return;
+            }
+            Proxy deletedProxy = null;
+            foreach(Proxy proxy in yamlConfig.ProxyList)
+            {
+                if(name.Equals(proxy.Name))
+                {
+                    deletedProxy = proxy;
+                    break;
+                }
+            }
+            RemoveProxy(deletedProxy);
+        }
+
         public void SetLogLevel(LogLevel logLevel)
         {
             switch (logLevel)
@@ -66,6 +112,11 @@ namespace ClashW.Config
         {
             YalmConfigManager.Instance.SaveYamlConfigFile(yamlConfig);
             ProcessManager.ClashProcessManager.Instance.Restart();
+        }
+
+        private void savedYamlConfig(YalmConfigManager sender, YamlConfig yamlConfig)
+        {
+            this.yamlConfig = yamlConfig;
         }
     }
 }
