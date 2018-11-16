@@ -56,7 +56,10 @@ namespace ClashW.Log
             System.Diagnostics.Debug.WriteLine(msg);
             lock(_lock)
             {
-                logFileStreamWriter.WriteLine(msg);
+                if(logFileStreamWriter != null)
+                {
+                    logFileStreamWriter.WriteLine(msg);
+                }
             }
         }
 

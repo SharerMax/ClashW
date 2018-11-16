@@ -55,6 +55,7 @@ namespace ClashW
 
         private static void start()
         {
+            var isDefaultConfig = !ConfigController.CheckYamlConfigFileExists();
             ConfigController.EnsureRunningConfig();
             var clashProcessManager = ClashProcessManager.Instance;
             clashProcessManager.ProcessErrorEvnet += new ClashProcessManager.ProcessErrorHandler(clashProcessError);
@@ -64,7 +65,21 @@ namespace ClashW
             trayMenu.Show();
             Application.ApplicationExit += new EventHandler(application_exit);
             trayMenu.ShowMessage("Running", "ClashW已启动");
+            if(isDefaultConfig)
+            {
+                ShowDefaultGeneralConfigForm();
+            }
+            
             Application.Run();
+        }
+
+        private static void ShowDefaultGeneralConfigForm()
+        {
+            GeneralConfigForm generalConfigForm = new GeneralConfigForm();
+            generalConfigForm.ShowDialog();
+            MainForm mainForm = new MainForm();
+            mainForm.Show();
+            mainForm.Activate();
         }
 
         private static void application_exit(object sender, EventArgs e)

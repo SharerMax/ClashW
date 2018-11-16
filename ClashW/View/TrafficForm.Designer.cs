@@ -76,7 +76,7 @@
             // uploadInfolabel
             // 
             this.uploadInfolabel.AutoSize = true;
-            this.uploadInfolabel.Location = new System.Drawing.Point(121, 34);
+            this.uploadInfolabel.Location = new System.Drawing.Point(183, 34);
             this.uploadInfolabel.Name = "uploadInfolabel";
             this.uploadInfolabel.Size = new System.Drawing.Size(64, 31);
             this.uploadInfolabel.TabIndex = 1;
@@ -85,7 +85,7 @@
             // uploadLabel
             // 
             this.uploadLabel.AutoSize = true;
-            this.uploadLabel.Location = new System.Drawing.Point(29, 34);
+            this.uploadLabel.Location = new System.Drawing.Point(91, 34);
             this.uploadLabel.Name = "uploadLabel";
             this.uploadLabel.Size = new System.Drawing.Size(86, 31);
             this.uploadLabel.TabIndex = 0;

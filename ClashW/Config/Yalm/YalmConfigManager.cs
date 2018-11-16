@@ -117,6 +117,11 @@ namespace ClashW.Config.Yaml
             yamlConfig.RuleList.Add("FINAL,,Proxy");
             return yamlConfig;
         }
+
+        public static bool CheckYamlConfigFileExists()
+        {
+            return File.Exists(CONFIG_FILE_PATH);
+        }
     }
 
     

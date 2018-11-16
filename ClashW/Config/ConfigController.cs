@@ -351,5 +351,10 @@ namespace ClashW.Config
         {
             YalmConfigManager.Instance.EnsureYamlConfig();
         }
+
+        public static bool CheckYamlConfigFileExists()
+        {
+           return YalmConfigManager.CheckYamlConfigFileExists();
+        }
     }
 }
