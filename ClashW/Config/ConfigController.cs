@@ -190,6 +190,15 @@ namespace ClashW.Config
             return null;
         }
 
+        public void RequestProxyDelay(Proxy proxy, ProxyDelayHandler proxyDelayHandler)
+        {
+            RequestProxyDelayByName(proxy.Name, proxyDelayHandler);
+        }
+        public void RequestProxyDelayByName(string name, ProxyDelayHandler proxyDelayHandler)
+        {
+            clashApi.ProxyDelay(name, 3000, "https://www.bing.com", proxyDelayHandler);
+        }
+
         public void EnableSystemProxy(bool enable)
         {
             var proxyhost = yamlConfig.Port == 0 ? DEFAULT_PROXY_HOST : $"127.0.0.1:{yamlConfig.Port}";

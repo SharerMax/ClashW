@@ -23,6 +23,7 @@ namespace ClashW.Config.Api
         public event TrafficInfoHandler TrafficInfoEvent;
         public Thread loadLogMessageThread;
         public Thread loadTrafficInfoThread;
+        public delegate void ProxyDelayHandler(string name, int delay);
 
         private volatile bool stopLoadLogMessage = true;
         private volatile bool stopLoadTrafficInfo = true;
@@ -68,6 +69,29 @@ namespace ClashW.Config.Api
             var response =  restClient.Execute(request);
             System.Diagnostics.Debug.WriteLine(response.Content);
             return response.Content;
+        }
+
+        public void ProxyDelay(string name, int timeout, string url, ProxyDelayHandler proxyDelayHandler)
+        {
+            var request = new RestRequest($"proxies/{name}/delay");
+            request.Method = Method.GET;
+            request.AddQueryParameter("timeout", timeout.ToString());
+            request.AddQueryParameter("url", url);
+            Loger.Instance.Write($"Request Proxy Delay: {name} - {timeout} - {url}");
+            restClient.ExecuteAsync(request, response =>
+            {
+                int delay = -1;
+                if(response.StatusCode == HttpStatusCode.OK)
+                {
+                    Dictionary<string, int> pairs = JsonConvert.DeserializeObject <Dictionary<string, int>>(response.Content);
+                    if(pairs.ContainsKey("delay"))
+                    {
+                        delay = pairs["delay"];
+                    }
+                }
+                Loger.Instance.Write($"Response Proxy Delay: {name} - {delay}");
+                proxyDelayHandler.Invoke(name, delay);
+            });
         }
 
         public void StartLoadLogMessage()

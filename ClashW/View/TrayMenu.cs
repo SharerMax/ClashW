@@ -19,6 +19,7 @@ namespace ClashW.View
         private LogForm logForm;
         private GeneralConfigForm generalConfigForm;
         private TrafficForm trafficForm;
+        private ProxyDelayForm delayForm;
         private ContextMenu contextMenu;
         private MenuItem autoBootMenuItem;
         private MenuItem directRunningModeMenuItem;
@@ -115,7 +116,7 @@ namespace ClashW.View
             {
                 var proxyCount = selectableProxyNameList.Count;
                
-                menuItems = new MenuItem[selectableProxyNameList.Count];
+                menuItems = new MenuItem[selectableProxyNameList.Count + 1];
 
                 for(var i = 0; i < proxyCount; i++)
                 {
@@ -127,6 +128,7 @@ namespace ClashW.View
                         currentSelectedProxyMenuItem = menuItems[i];
                     }
                 }
+                menuItems[proxyCount] = new MenuItem("延迟测试", new EventHandler(proxyDelayItem_clicked));
             }
 
             return menuItems;
@@ -310,6 +312,16 @@ namespace ClashW.View
             }
             ConfigController.Instance.SelecteProxyByName((string)proxyItem.Tag);
             currentSelectedProxyMenuItem = proxyItem;
+        }
+
+        private void proxyDelayItem_clicked(object sender, EventArgs e)
+        {
+            if(delayForm == null || delayForm.IsDisposed)
+            {
+                delayForm = new ProxyDelayForm();
+            }
+            delayForm.Show();
+            delayForm.Activate();
         }
     }
 }
