@@ -78,28 +78,36 @@ namespace ClashW.Config
         public void Init(ClashProcessManager clashProcessManager)
         {
             this.clashProcessManager = clashProcessManager;
+            this.clashProcessManager.ProcessRestartEvent += new ClashProcessManager.ProcessRestartHandler(processRestarted);
             if (yamlConfig == null)
             {
                 yamlConfig = YalmConfigManager.Instance.GetYamlConfig();
-                YalmConfigManager.Instance.SavedYamlConfigChangedEvent += new YalmConfigManager.SavedYamlConfigChanged(SavedYamlConfigChanged);
+                YalmConfigManager.Instance.SavedYamlConfigChangedEvent += new YalmConfigManager.SavedYamlConfigChanged(savedYamlConfigChanged);
             }
+            clashApi = new ClashApi($"http://{yamlConfig.ExternalController}");
             initClashWConfig();
         }
 
-        private void SavedYamlConfigChanged(YalmConfigManager yalmConfigManager, YamlConfig yamlConfig)
+        private void savedYamlConfigChanged(YalmConfigManager yalmConfigManager, YamlConfig yamlConfig)
         {
-            var currentExternalController = yamlConfig.ExternalController;
             this.yamlConfig = yamlConfig;
-            if(!yamlConfig.ExternalController.Equals(currentExternalController))
-            {
-                clashApi.StopLoadLogMessage();
-                clashApi.BaseUrl = $"http://{yamlConfig.ExternalController}";
-            }
+            initClashWConfig();
+        }
+
+        private void processRestarted(ClashProcessManager processManager)
+        {
+            initClashWConfig();
         }
 
         private void initClashWConfig()
         {
-            clashApi = new ClashApi($"http://{yamlConfig.ExternalController}");
+            var currentExternalController = yamlConfig.ExternalController;
+            if (!yamlConfig.ExternalController.Equals(currentExternalController))
+            {
+                clashApi.StopLoadLogMessage();
+                clashApi.BaseUrl = $"http://{yamlConfig.ExternalController}";
+            }
+
             if (!String.IsNullOrEmpty(Properties.Settings.Default.SelectedServerName))
             {
                 foreach (Proxy proxy in yamlConfig.ProxyList)
@@ -261,7 +269,8 @@ namespace ClashW.Config
                 default:
                     break;
             }
-            saveYamlConfigFile();
+            clashApi.SwitchMode(yamlConfig.Mode);
+            saveYamlConfigFile(false);
             RunningModeChangedEvent?.Invoke(Instance, GetRunningMode());
         }
 
@@ -365,8 +374,17 @@ namespace ClashW.Config
 
         private void saveYamlConfigFile()
         {
+
+            saveYamlConfigFile(true);
+        }
+
+        private void saveYamlConfigFile(bool restart)
+        {
             YalmConfigManager.Instance.SaveYamlConfigFile(yamlConfig);
-            clashProcessManager.Restart();
+            if(restart)
+            {
+                clashProcessManager.Restart();
+            }
         }
 
         public static void EnsureRunningConfig()

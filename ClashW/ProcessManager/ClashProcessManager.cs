@@ -30,6 +30,9 @@ namespace ClashW.ProcessManager
         public delegate void ProcessErrorHandler(ClashProcessManager sender, string message);
         public event ProcessErrorHandler ProcessErrorEvnet;
 
+        public delegate void ProcessRestartHandler(ClashProcessManager sender);
+        public event ProcessRestartHandler ProcessRestartEvent;
+
         private ClashProcessManager()
         {
 
@@ -100,6 +103,7 @@ namespace ClashW.ProcessManager
         {
             Kill();
             Start();
+            ProcessRestartEvent?.Invoke(this);
         }
 
         private void process_data_received(object sender, DataReceivedEventArgs dataReceivedEventArgs)

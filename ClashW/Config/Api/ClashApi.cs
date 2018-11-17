@@ -94,6 +94,28 @@ namespace ClashW.Config.Api
             });
         }
 
+        public void Config(int port, int socksPort, bool allowLan, string mode, string logLevel)
+        {
+            var request = new RestRequest($"configs");
+            request.Method = Method.PUT;
+            var jsonBody = $"{{\"port\":{port}, \"socket-port\":{socksPort},\"allow-lan\":${allowLan},\"mode\":\"{mode}\",\"log-level\":\"{logLevel}\"}}";
+            // https://github.com/restsharp/RestSharp/issues/703
+            request.AddParameter("application/json", jsonBody, ParameterType.RequestBody);
+            var response = restClient.Execute(request);
+            System.Diagnostics.Debug.WriteLine(response.Content);
+        }
+
+        public void SwitchMode(string mode)
+        {
+            var request = new RestRequest($"configs");
+            request.Method = Method.PUT;
+            var jsonBody = $"{{\"mode\":\"{mode}\"}}";
+            // https://github.com/restsharp/RestSharp/issues/703
+            request.AddParameter("application/json", jsonBody, ParameterType.RequestBody);
+            var response = restClient.Execute(request);
+            System.Diagnostics.Debug.WriteLine(response.Content);
+        }
+
         public void StartLoadLogMessage()
         {
             if(stopLoadLogMessage)
