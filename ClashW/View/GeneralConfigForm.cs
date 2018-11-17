@@ -66,7 +66,8 @@ namespace ClashW.View
             allowLanCheckBox.Checked = configController.IsAllowLan();
             externalContrallTextbox.Text = configController.GetExternalController();
             externalSecretTextbox.Text = configController.GetExternalControllerSecret();
-            switch(configController.GetLogLevel())
+            testUrlTextBox.Text = Properties.Settings.Default.TestUrl;
+            switch (configController.GetLogLevel())
             {
                 case LogLevel.INFO:
                     logLevelComboBox.SelectedItem = ConfigController.LOG_LEVEL_INFO.ToUpper();

@@ -125,7 +125,7 @@ namespace ClashW.Config
         public List<Proxy> AddProxy(Proxy proxy)
         {
             yamlConfig.ProxyList.Add(proxy);
-            ConfigHelper.GenerateProxyGroup(yamlConfig);
+            ConfigHelper.GenerateProxyGroup(yamlConfig, Properties.Settings.Default.TestUrl);
             saveYamlConfigFile();
             List<Proxy> newProxyList = new List<Proxy>(yamlConfig.ProxyList);
             ProxyChangedEvent?.Invoke(Instance, newProxyList);
@@ -135,7 +135,7 @@ namespace ClashW.Config
         public List<Proxy> RemoveProxy(Proxy proxy)
         {
             yamlConfig.ProxyList.Remove(proxy);
-            ConfigHelper.GenerateProxyGroup(yamlConfig);
+            ConfigHelper.GenerateProxyGroup(yamlConfig, Properties.Settings.Default.TestUrl);
             saveYamlConfigFile();
             List<Proxy> newProxyList = new List<Proxy>(yamlConfig.ProxyList);
             ProxyChangedEvent?.Invoke(Instance, newProxyList);
@@ -205,7 +205,7 @@ namespace ClashW.Config
         }
         public void RequestProxyDelayByName(string name, ProxyDelayHandler proxyDelayHandler)
         {
-            clashApi.ProxyDelay(name, 3000, "https://www.bing.com", proxyDelayHandler);
+            clashApi.ProxyDelay(name, 3000, Properties.Settings.Default.TestUrl, proxyDelayHandler);
         }
 
         public void EnableSystemProxy(bool enable)

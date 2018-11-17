@@ -11,5 +11,8 @@
     <Setting Name="EnableSystemProxy" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
+    <Setting Name="TestUrl" Type="System.String" Scope="User">
+      <Value Profile="(Default)">https://www.bing.com</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

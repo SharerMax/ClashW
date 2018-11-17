@@ -11,9 +11,11 @@ namespace ClashW.Config
     public sealed class ConfigEditor
     {
         private YamlConfig yamlConfig;
+        private string testUrl;
         public ConfigEditor()
         {
             yamlConfig = YalmConfigManager.Instance.GetYamlConfig();
+            testUrl = Properties.Settings.Default.TestUrl;
             YalmConfigManager.Instance.SavedYamlConfigChangedEvent += new YalmConfigManager.SavedYamlConfigChanged(savedYamlConfig);
         }
 
@@ -45,7 +47,7 @@ namespace ClashW.Config
         public void AddProxy(Proxy proxy)
         {
             yamlConfig.ProxyList.Add(proxy);
-            ConfigHelper.GenerateProxyGroup(yamlConfig);
+            ConfigHelper.GenerateProxyGroup(yamlConfig, Properties.Settings.Default.TestUrl);
         }
 
         public void AddProxy(int index, Proxy proxy)
@@ -66,7 +68,7 @@ namespace ClashW.Config
         public void RemoveProxy(Proxy proxy)
         {
             yamlConfig.ProxyList.Remove(proxy);
-            ConfigHelper.GenerateProxyGroup(yamlConfig);
+            ConfigHelper.GenerateProxyGroup(yamlConfig, Properties.Settings.Default.TestUrl);
         }
 
         public void RemoveProxyByName(string name)
@@ -108,8 +110,20 @@ namespace ClashW.Config
             }
         }
 
+        public void SetTestUrl(string testUrl)
+        {
+            this.testUrl = testUrl;
+        }
+
         public void Commit()
         {
+            if(!testUrl.Equals(Properties.Settings.Default.TestUrl))
+            {
+                Properties.Settings.Default.TestUrl = testUrl;
+                Properties.Settings.Default.Save();
+                ConfigHelper.GenerateProxyGroup(yamlConfig, testUrl);
+            }
+            
             YalmConfigManager.Instance.SaveYamlConfigFile(yamlConfig);
             ProcessManager.ClashProcessManager.Instance.Restart();
         }

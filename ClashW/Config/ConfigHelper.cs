@@ -9,7 +9,7 @@ namespace ClashW.Config
 {
     public sealed class ConfigHelper
     {
-        public  static void GenerateProxyGroup(YamlConfig yamlConfig)
+        public  static void GenerateProxyGroup(YamlConfig yamlConfig, string testUrl)
         {
             if (yamlConfig.ProxyGroups == null)
             {
@@ -27,13 +27,13 @@ namespace ClashW.Config
             var autoProxyGroup = new ProxyGroup();
             autoProxyGroup.Name = "Auto";
             autoProxyGroup.Type = "url-test";
-            autoProxyGroup.Url = "https://www.bing.com";
+            autoProxyGroup.Url = testUrl;
             autoProxyGroup.Interval = 500;
             autoProxyGroup.Proxies = new List<string>();
             var fallbackAutoGroup = new ProxyGroup();
             fallbackAutoGroup.Name = "FallbackAuto";
             fallbackAutoGroup.Type = "fallback";
-            fallbackAutoGroup.Url = "https://www.bing.com";
+            fallbackAutoGroup.Url = testUrl;
             fallbackAutoGroup.Interval = 500;
             fallbackAutoGroup.Proxies = new List<string>();
 

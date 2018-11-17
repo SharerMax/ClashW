@@ -95,7 +95,7 @@ namespace ClashW.Config.Yaml
             var yamlConfig = new YamlConfig();
             yamlConfig.Port = 7890;
             yamlConfig.SocksPort = 7891;
-            yamlConfig.AllowLan = true;
+            yamlConfig.AllowLan = false;
             yamlConfig.Mode = "Direct"; // Rule / Global/ Direct 
             yamlConfig.LogLevel = "info"; // info / warning / error / debug
             yamlConfig.ExternalController = "127.0.0.1:9090";

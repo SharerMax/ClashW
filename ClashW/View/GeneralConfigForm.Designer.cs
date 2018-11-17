@@ -44,6 +44,8 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.ResetButton = new System.Windows.Forms.Button();
             this.saveButton = new System.Windows.Forms.Button();
+            this.urlTestLabel = new System.Windows.Forms.Label();
+            this.testUrlTextBox = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.socksNumericUpDown)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.httpNumericUpDown)).BeginInit();
@@ -91,6 +93,8 @@
             this.tableLayoutPanel1.ColumnCount = 2;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 31.3093F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 68.6907F));
+            this.tableLayoutPanel1.Controls.Add(this.testUrlTextBox, 1, 6);
+            this.tableLayoutPanel1.Controls.Add(this.urlTestLabel, 0, 6);
             this.tableLayoutPanel1.Controls.Add(this.externalSecretLabel, 0, 5);
             this.tableLayoutPanel1.Controls.Add(this.externalSecretTextbox, 0, 5);
             this.tableLayoutPanel1.Controls.Add(this.socksPortLabel, 0, 0);
@@ -108,14 +112,15 @@
             this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.Padding = new System.Windows.Forms.Padding(10);
-            this.tableLayoutPanel1.RowCount = 6;
+            this.tableLayoutPanel1.RowCount = 7;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 48F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 48F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 48F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 48F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 48F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 48F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(547, 307);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 48F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(547, 344);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // externalSecretLabel
@@ -243,7 +248,7 @@
             this.panel1.Controls.Add(this.ResetButton);
             this.panel1.Controls.Add(this.saveButton);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel1.Location = new System.Drawing.Point(0, 307);
+            this.panel1.Location = new System.Drawing.Point(0, 344);
             this.panel1.Margin = new System.Windows.Forms.Padding(0);
             this.panel1.Name = "panel1";
             this.panel1.Padding = new System.Windows.Forms.Padding(0, 20, 10, 0);
@@ -269,12 +274,31 @@
             this.saveButton.UseVisualStyleBackColor = true;
             this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
             // 
+            // urlTestLabel
+            // 
+            this.urlTestLabel.AutoSize = true;
+            this.urlTestLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.urlTestLabel.Location = new System.Drawing.Point(13, 298);
+            this.urlTestLabel.Name = "urlTestLabel";
+            this.urlTestLabel.Size = new System.Drawing.Size(159, 48);
+            this.urlTestLabel.TabIndex = 12;
+            this.urlTestLabel.Text = "测速链接：";
+            this.urlTestLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // testUrlTextBox
+            // 
+            this.testUrlTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.testUrlTextBox.Location = new System.Drawing.Point(178, 301);
+            this.testUrlTextBox.Name = "testUrlTextBox";
+            this.testUrlTextBox.Size = new System.Drawing.Size(356, 39);
+            this.testUrlTextBox.TabIndex = 13;
+            // 
             // GeneralConfigForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(14F, 31F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(547, 389);
+            this.ClientSize = new System.Drawing.Size(547, 448);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
@@ -311,5 +335,7 @@
         private System.Windows.Forms.Button saveButton;
         private System.Windows.Forms.Label externalSecretLabel;
         private System.Windows.Forms.TextBox externalSecretTextbox;
+        private System.Windows.Forms.TextBox testUrlTextBox;
+        private System.Windows.Forms.Label urlTestLabel;
     }
 }
