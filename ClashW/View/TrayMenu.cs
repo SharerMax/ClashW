@@ -47,7 +47,11 @@ namespace ClashW.View
             notify.MouseClick += new MouseEventHandler(tray_clicked);
             runningMode = ConfigController.Instance.GetRunningMode();
             proxyList = ConfigController.Instance.GetProxyList();
-
+            autoBootMenuItem = new MenuItem("开机启动", new EventHandler(autoBootItem_clicked));
+            if(ConfigController.Instance.CheckAutoStartupEnable())
+            {
+                autoBootMenuItem.Checked = true;
+            }
             systemProxyMenuItem = new MenuItem("系统代理", new EventHandler(systemProxyItem_clicked));
             if (ConfigController.Instance.CheckSystemProxyEnable())
             {
@@ -83,7 +87,9 @@ namespace ClashW.View
 
             generalConfigMenuItem = new MenuItem("通用配置...", new EventHandler(generalConfigMenuItem_clicked));
             trafficViewMenuItem = new MenuItem("流量...", new EventHandler(trafficViewMenuItem_clicked));
+
             contextMenu = new ContextMenu(new MenuItem[] {
+                autoBootMenuItem,
                 systemProxyMenuItem,
                 new MenuItem("-"),
                 directRunningModeMenuItem,
@@ -210,7 +216,20 @@ namespace ClashW.View
                 ConfigController.Instance.EnableSystemProxy(true);
                 systemProxyMenuItem.Checked = true;
             }
-            
+        }
+
+        private void autoBootItem_clicked(object sender, EventArgs e)
+        {
+            if(autoBootMenuItem.Checked)
+            {
+                ConfigController.Instance.EnableAutoStartup(false);
+                autoBootMenuItem.Checked = false;
+            }
+            else
+            {
+                ConfigController.Instance.EnableAutoStartup(true);
+                autoBootMenuItem.Checked = true;
+            }
         }
 
         private void generalConfigMenuItem_clicked(object sender, EventArgs e)

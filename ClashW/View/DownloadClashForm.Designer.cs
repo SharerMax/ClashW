@@ -30,7 +30,7 @@
         {
             this.clashProgressBar = new System.Windows.Forms.ProgressBar();
             this.geoipProgressBar = new System.Windows.Forms.ProgressBar();
-            this.CancelButton = new System.Windows.Forms.Button();
+            this.cancelButton = new System.Windows.Forms.Button();
             this.clashLabel = new System.Windows.Forms.Label();
             this.geoipLabel = new System.Windows.Forms.Label();
             this.clashProgressValueLabel = new System.Windows.Forms.Label();
@@ -53,16 +53,16 @@
             this.geoipProgressBar.Size = new System.Drawing.Size(646, 40);
             this.geoipProgressBar.TabIndex = 1;
             // 
-            // CancelButton
+            // cancelButton
             // 
-            this.CancelButton.Location = new System.Drawing.Point(359, 268);
-            this.CancelButton.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.CancelButton.Name = "CancelButton";
-            this.CancelButton.Size = new System.Drawing.Size(168, 61);
-            this.CancelButton.TabIndex = 2;
-            this.CancelButton.Text = "取消";
-            this.CancelButton.UseVisualStyleBackColor = true;
-            this.CancelButton.Click += new System.EventHandler(this.CancelButton_Click);
+            this.cancelButton.Location = new System.Drawing.Point(359, 268);
+            this.cancelButton.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.cancelButton.Name = "cancelButton";
+            this.cancelButton.Size = new System.Drawing.Size(168, 61);
+            this.cancelButton.TabIndex = 2;
+            this.cancelButton.Text = "取消";
+            this.cancelButton.UseVisualStyleBackColor = true;
+            this.cancelButton.Click += new System.EventHandler(this.CancelButton_Click);
             // 
             // clashLabel
             // 
@@ -111,7 +111,7 @@
             this.Controls.Add(this.clashProgressValueLabel);
             this.Controls.Add(this.geoipLabel);
             this.Controls.Add(this.clashLabel);
-            this.Controls.Add(this.CancelButton);
+            this.Controls.Add(this.cancelButton);
             this.Controls.Add(this.geoipProgressBar);
             this.Controls.Add(this.clashProgressBar);
             this.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
@@ -129,7 +129,7 @@
 
         private System.Windows.Forms.ProgressBar clashProgressBar;
         private System.Windows.Forms.ProgressBar geoipProgressBar;
-        private System.Windows.Forms.Button CancelButton;
+        private System.Windows.Forms.Button cancelButton;
         private System.Windows.Forms.Label clashLabel;
         private System.Windows.Forms.Label geoipLabel;
         private System.Windows.Forms.Label clashProgressValueLabel;

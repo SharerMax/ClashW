@@ -111,6 +111,7 @@ namespace ClashW.Config
                 }
             }
             EnableSystemProxy(Properties.Settings.Default.EnableSystemProxy);
+            EnableAutoStartup(Properties.Settings.Default.AutoStratup);
         }
 
         public List<Proxy> AddProxy(Proxy proxy)
@@ -214,17 +215,29 @@ namespace ClashW.Config
                 ProxyUtils.SetProxy("", false);
                 SystemProxyChangedEvent?.Invoke(Instance, proxyhost, enable);
             }
+            Properties.Settings.Default.EnableSystemProxy = enable;
+            Properties.Settings.Default.Save();
+        }
+
+        public void EnableAutoStartup(bool enable)
+        {
+            if((enable && !Properties.Settings.Default.AutoStratup) || (!enable && Properties.Settings.Default.AutoStratup))
+            {
+                StartupUtils.EnableAutoStartup(enable);
+                Properties.Settings.Default.AutoStratup = enable;
+                Properties.Settings.Default.Save();
+            }
+        }
+
+        public bool CheckAutoStartupEnable()
+        {
+            return Properties.Settings.Default.AutoStratup;
         }
 
         public bool CheckSystemProxyEnable()
         {
             var proxyhost = yamlConfig.Port == 0 ? DEFAULT_PROXY_HOST : $"127.0.0.1:{yamlConfig.Port}";
             return ProxyUtils.ProxyEnabled(proxyhost);
-        }
-
-        public void EnableStartup(bool enable)
-        {
-
         }
 
         public void SwitchRunningMode(RunningMode mode)
