@@ -118,6 +118,7 @@
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.MaximizeBox = false;
             this.Name = "DownloadClashForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "下载运行依赖";
             this.Load += new System.EventHandler(this.DownloadClash_Load);
             this.ResumeLayout(false);

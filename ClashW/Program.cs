@@ -11,14 +11,14 @@ using ClashW.Properties;
 using ClashW.Config.Yaml;
 using ClashW.Log;
 using System.IO;
+using ClashW.Utils;
 
 namespace ClashW
 {
     static class Program
     {
         static TrayMenu trayMenu;
-        private const string CLASH_TARGET_NAME = @"./clash-win64.exe";
-        private const string GEOIP_TARGET_NAME = @"./Country.mmdb";
+       
         /// <summary>
         /// 应用程序的主入口点。
         /// </summary>
@@ -111,7 +111,7 @@ namespace ClashW
         private static bool checkClashFile()
         {
             //return false;
-            return File.Exists(CLASH_TARGET_NAME) && File.Exists(GEOIP_TARGET_NAME);
+            return File.Exists(AppContract.CLASH_EXE_PATH) && File.Exists(AppContract.CLASH_GEOIP_PATH);
         }
     }
 }

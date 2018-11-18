@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ClashW.Utils;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -10,7 +11,7 @@ namespace ClashW.Log
     public sealed class Loger
     {
         private static object _lock = new object();
-        private string logFilePath = @"./output.log";
+        private string logFilePath = AppContract.CLASHW_LOG_PATH;
         private StreamWriter logFileStreamWriter = null;
         public string LogFilePath
         {
@@ -33,6 +34,10 @@ namespace ClashW.Log
         }
         private Loger()
         {
+            if(!Directory.Exists(AppContract.LOG_DIR))
+            {
+                Directory.CreateDirectory(AppContract.LOG_DIR);
+            }
             var logFileStream = File.Open(logFilePath, FileMode.OpenOrCreate, FileAccess.Write, FileShare.Read);
             logFileStream.SetLength(0);
             logFileStreamWriter = new StreamWriter(logFileStream);

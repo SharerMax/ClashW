@@ -8,6 +8,7 @@ using System.IO;
 using System.Threading;
 using System.Text.RegularExpressions;
 using ClashW.Log;
+using ClashW.Utils;
 
 namespace ClashW.ProcessManager
 {
@@ -16,7 +17,7 @@ namespace ClashW.ProcessManager
         private static ClashProcessManager clashProcessManager = null;
         private static readonly object padlock = new object();
         private Process process = null;
-        private const string PROMCSS_NMAE = @"./clash-win64";
+        private static readonly string PROMCSS_RUN_PATH = AppContract.CLASH_EXE_PATH;
 
         public delegate void OutPutHandler(string output);
         public event OutPutHandler OutputEvent;
@@ -60,11 +61,13 @@ namespace ClashW.ProcessManager
             if(process == null || process.HasExited)
             {
                 process = new Process();
+               
                 process.StartInfo.UseShellExecute = false;
                 process.StartInfo.CreateNoWindow = true;
                 process.StartInfo.RedirectStandardOutput = true;
                 process.StartInfo.RedirectStandardError = true;
-                process.StartInfo.FileName = PROMCSS_NMAE;
+                process.StartInfo.WorkingDirectory = AppContract.BIN_DIR;
+                process.StartInfo.FileName = PROMCSS_RUN_PATH;
                 process.StartInfo.Arguments = @"-d .";
                 process.OutputDataReceived += new DataReceivedEventHandler(process_data_received);
                 process.ErrorDataReceived += new DataReceivedEventHandler(process_data_received);
@@ -78,7 +81,7 @@ namespace ClashW.ProcessManager
 
         private void ensureSingleRun()
         {
-            var processArray = Process.GetProcessesByName("clash-win64");
+            var processArray = Process.GetProcessesByName(AppContract.CLASH_PROCESS_NAME);
             foreach(Process p in processArray) {
                 if(!p.HasExited)
                 {

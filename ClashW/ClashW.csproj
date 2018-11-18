@@ -99,6 +99,7 @@
     <Compile Include="Config\Yalm\Dao\Vmess.cs" />
     <Compile Include="Config\Yalm\YalmConfigManager.cs" />
     <Compile Include="Config\Yalm\Dao\YamlConfig.cs" />
+    <Compile Include="Utils\AppContract.cs" />
     <Compile Include="Utils\Loger\Loger.cs" />
     <Compile Include="ProcessManager\ClashProcessManager.cs" />
     <Compile Include="Program.cs" />

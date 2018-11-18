@@ -12,6 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ICSharpCode.SharpZipLib.Tar;
+using ClashW.Utils;
 
 namespace ClashW.View
 {
@@ -19,11 +20,7 @@ namespace ClashW.View
     {
         private const string CLASH_DOWNLOAD_URL = "https://github.com/Dreamacro/clash/releases/download/v0.9.1/clash-win64.zip";
         private const string GEOIP_DOWNLOAD_URL = "https://geolite.maxmind.com/download/geoip/database/GeoLite2-Country.tar.gz";
-        private const string CLASH_DOWNLOAD_ZIP_NAME = @"clash-win64.zip";
-        private const string CLASH_DOWNLOAD_TGZ_NAME = @"GeoLite2-Country.tar.gz";
-        private const string DOWNLOAD_TEMP_DIRECTORY = @"./temp/";
-        private const string CLASH_TARGET_NAME = @"./clash-win64.exe";
-        private const string GEOIP_TARGET_NAME = @"./Country.mmdb";
+ 
         private WebClient clashWebClient;
         private WebClient geoipWebClient;
         private int completeCount;
@@ -35,11 +32,11 @@ namespace ClashW.View
 
         private void DownloadClash_Load(object sender, EventArgs e)
         {
-            ensureTempDirectory();
+            ensureUsedDirectory();
             clashWebClient = generateWebClient();
-            clashWebClient.DownloadFileAsync(new Uri(CLASH_DOWNLOAD_URL), $"{DOWNLOAD_TEMP_DIRECTORY}{CLASH_DOWNLOAD_ZIP_NAME}");
+            clashWebClient.DownloadFileAsync(new Uri(CLASH_DOWNLOAD_URL), AppContract.CLASH_DOWNLOAD_PATH);
             geoipWebClient = generateWebClient();
-            geoipWebClient.DownloadFileAsync(new Uri(GEOIP_DOWNLOAD_URL), $"{DOWNLOAD_TEMP_DIRECTORY}{CLASH_DOWNLOAD_TGZ_NAME}");
+            geoipWebClient.DownloadFileAsync(new Uri(GEOIP_DOWNLOAD_URL), AppContract.GEOIP_DOWNLOAD_PATH);
         }
 
         private WebClient generateWebClient()
@@ -50,11 +47,16 @@ namespace ClashW.View
             return webClient;
         }
 
-        private void ensureTempDirectory()
+        private void ensureUsedDirectory()
         {
-            if (!Directory.Exists(DOWNLOAD_TEMP_DIRECTORY))
+            if (!Directory.Exists(AppContract.DOWNLOAD_TEMP_DIR))
             {
-                Directory.CreateDirectory(DOWNLOAD_TEMP_DIRECTORY);
+                Directory.CreateDirectory(AppContract.DOWNLOAD_TEMP_DIR);
+            }
+
+            if(!Directory.Exists(AppContract.BIN_DIR))
+            {
+                Directory.CreateDirectory(AppContract.BIN_DIR);
             }
         }
 
@@ -91,27 +93,27 @@ namespace ClashW.View
         private void unZipClashFile()
         {
             FastZip fastZip = new FastZip();
-            fastZip.ExtractZip($"{DOWNLOAD_TEMP_DIRECTORY}{CLASH_DOWNLOAD_ZIP_NAME}", DOWNLOAD_TEMP_DIRECTORY, string.Empty);
-            if(File.Exists(CLASH_TARGET_NAME))
+            fastZip.ExtractZip(AppContract.CLASH_DOWNLOAD_PATH, AppContract.DOWNLOAD_TEMP_DIR, string.Empty);
+            if(File.Exists(AppContract.CLASH_EXE_PATH))
             {
-                File.Delete(CLASH_TARGET_NAME);
+                File.Delete(AppContract.CLASH_EXE_PATH);
             }
-            File.Move($"{DOWNLOAD_TEMP_DIRECTORY}/clash-win64.exe", CLASH_TARGET_NAME);
+            File.Move($"{AppContract.DOWNLOAD_TEMP_DIR}clash-win64.exe", AppContract.CLASH_EXE_PATH);
         }
 
         private void unTGZGeoIpFile()
         {
-            Stream inStream = File.OpenRead($"{DOWNLOAD_TEMP_DIRECTORY}{CLASH_DOWNLOAD_TGZ_NAME}");
+            Stream inStream = File.OpenRead(AppContract.GEOIP_DOWNLOAD_PATH);
             Stream gzipStream = new GZipInputStream(inStream);
 
             TarArchive tarArchive = TarArchive.CreateInputTarArchive(gzipStream);
-            tarArchive.ExtractContents(DOWNLOAD_TEMP_DIRECTORY);
+            tarArchive.ExtractContents(AppContract.DOWNLOAD_TEMP_DIR);
             tarArchive.Close();
 
             gzipStream.Close();
             inStream.Close();
            
-            string[] directorPath = Directory.GetDirectories($"{DOWNLOAD_TEMP_DIRECTORY}");
+            string[] directorPath = Directory.GetDirectories(AppContract.DOWNLOAD_TEMP_DIR);
             for(var index = 0; index < directorPath.Length; index++)
             {
                 System.Diagnostics.Debug.WriteLine(directorPath[index]);
@@ -123,11 +125,11 @@ namespace ClashW.View
                         System.Diagnostics.Debug.WriteLine(filePath[index]);
                         if (filePath[fileIndex].EndsWith(".mmdb"))
                         {
-                            if(File.Exists(GEOIP_TARGET_NAME))
+                            if(File.Exists(AppContract.CLASH_GEOIP_PATH))
                             {
-                                File.Delete(GEOIP_TARGET_NAME);
+                                File.Delete(AppContract.CLASH_GEOIP_PATH);
                             }
-                            File.Move(filePath[fileIndex], GEOIP_TARGET_NAME);
+                            File.Move(filePath[fileIndex], AppContract.CLASH_GEOIP_PATH);
                             break;
                         }
                     }

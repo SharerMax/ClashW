@@ -8,6 +8,7 @@ using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 using System.IO;
 using ClashW.Config.Yaml.Dao;
+using ClashW.Utils;
 
 namespace ClashW.Config.Yaml
 {
@@ -15,7 +16,7 @@ namespace ClashW.Config.Yaml
     {
         private static YalmConfigManager instance = null;
         private static readonly object padlock = new object();
-        private const string CONFIG_FILE_PATH = @"./config.yml";
+        private static readonly string CONFIG_FILE_PATH = AppContract.CLASH_CONFIG_PATH;
 
         public delegate void SavedYamlConfigChanged(YalmConfigManager sender, YamlConfig yamlConfig);
         public event SavedYamlConfigChanged SavedYamlConfigChangedEvent;
