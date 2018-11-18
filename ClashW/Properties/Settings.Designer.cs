@@ -70,5 +70,65 @@ namespace ClashW.Properties {
                 this["TestUrl"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string UserRuleMD5 {
+            get {
+                return ((string)(this["UserRuleMD5"]));
+            }
+            set {
+                this["UserRuleMD5"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string OnlineRuleUrl {
+            get {
+                return ((string)(this["OnlineRuleUrl"]));
+            }
+            set {
+                this["OnlineRuleUrl"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string OnlineRuleMD5 {
+            get {
+                return ((string)(this["OnlineRuleMD5"]));
+            }
+            set {
+                this["OnlineRuleMD5"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("11/19/2018 00:21:00")]
+        public global::System.DateTime OnlineUpdateTime {
+            get {
+                return ((global::System.DateTime)(this["OnlineUpdateTime"]));
+            }
+            set {
+                this["OnlineUpdateTime"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public int OnlineUpdateIntervalHour {
+            get {
+                return ((int)(this["OnlineUpdateIntervalHour"]));
+            }
+            set {
+                this["OnlineUpdateIntervalHour"] = value;
+            }
+        }
     }
 }

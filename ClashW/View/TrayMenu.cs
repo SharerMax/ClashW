@@ -9,6 +9,7 @@ using ClashW.View;
 using ClashW.Config;
 using ClashW.Utils;
 using ClashW.Config.Yaml.Dao;
+using System.IO;
 
 namespace ClashW.View
 {
@@ -20,6 +21,7 @@ namespace ClashW.View
         private GeneralConfigForm generalConfigForm;
         private TrafficForm trafficForm;
         private ProxyDelayForm delayForm;
+        private OnlineRuleForm onlineRuleForm;
         private ContextMenu contextMenu;
         private MenuItem autoBootMenuItem;
         private MenuItem directRunningModeMenuItem;
@@ -32,6 +34,8 @@ namespace ClashW.View
         private MenuItem proxyServerMenuItemGroup;
         private MenuItem generalConfigMenuItem;
         private MenuItem trafficViewMenuItem;
+        private MenuItem onlineRuleMenuItem;
+        private MenuItem editeRuleMenuItem;
         private RunningMode runningMode;
         private List<Proxy> proxyList;
         
@@ -88,6 +92,8 @@ namespace ClashW.View
             generalConfigMenuItem = new MenuItem("通用配置...", new EventHandler(generalConfigMenuItem_clicked));
             trafficViewMenuItem = new MenuItem("流量...", new EventHandler(trafficViewMenuItem_clicked));
 
+            var ruleMenuItemGroup = creatMenuGroup("规则配置", createRuleMenuItems());
+
             contextMenu = new ContextMenu(new MenuItem[] {
                 autoBootMenuItem,
                 systemProxyMenuItem,
@@ -101,6 +107,7 @@ namespace ClashW.View
                 logFormMenuItem,
                 generalConfigMenuItem,
                 trafficViewMenuItem,
+                ruleMenuItemGroup,
                 new MenuItem("-"),
                 new MenuItem("退出", new EventHandler(exitMenuItem_clicked))
             });
@@ -139,6 +146,16 @@ namespace ClashW.View
 
             return menuItems;
             
+        }
+
+        private MenuItem[] createRuleMenuItems()
+        {
+            
+            return new MenuItem[] 
+            {
+                new MenuItem("在线规则...", new EventHandler(onlineRuleMenuItem_clicked)),
+                new MenuItem("编辑规则...", new EventHandler(editeRuleMenuItem_clicked))
+            };
         }
 
         internal void Show()
@@ -342,5 +359,31 @@ namespace ClashW.View
             delayForm.Show();
             delayForm.Activate();
         }
+
+        private void onlineRuleMenuItem_clicked(object sender, EventArgs e)
+        {
+            if (onlineRuleForm == null || onlineRuleForm.IsDisposed)
+            {
+                onlineRuleForm = new OnlineRuleForm();
+            }
+            onlineRuleForm.Show();
+            onlineRuleForm.Activate();
+        }
+
+        private void editeRuleMenuItem_clicked(object sender, EventArgs e)
+        {
+            if (!Directory.Exists(AppContract.RULE_DIR))
+            {
+                Directory.CreateDirectory(AppContract.RULE_DIR);
+            }
+            if (!File.Exists(AppContract.USER_RULE_PATH))
+            {
+                File.Create(AppContract.USER_RULE_PATH).Close();
+            }
+
+            MessageBox.Show($"请手动编辑{AppContract.USER_RULE_NAME}文件，其规则命中优先级大于在线规则。", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            System.Diagnostics.Process.Start("explorer.exe", Path.GetFullPath(AppContract.RULE_DIR));
+        }
+
     }
 }

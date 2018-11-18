@@ -12,6 +12,7 @@ using ClashW.Config.Yaml;
 using ClashW.Log;
 using System.IO;
 using ClashW.Utils;
+using System.Threading;
 
 namespace ClashW
 {
@@ -27,7 +28,8 @@ namespace ClashW
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.ThreadException += new System.Threading.ThreadExceptionEventHandler(applicationExceptionCause);
+            Application.ThreadException += new ThreadExceptionEventHandler(applicationExceptionCause);
+            AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(unHandlerExceptionCause);
             if(checkClashFile())
             {
                 start();
@@ -103,9 +105,20 @@ namespace ClashW
             
         }
 
-        private static void applicationExceptionCause(object sender, System.Threading.ThreadExceptionEventArgs threadExceptionEventArgs)
+        private static void unHandlerExceptionCause(object sender, UnhandledExceptionEventArgs e)
         {
-            Loger.Instance.Write(threadExceptionEventArgs.Exception);
+            Loger.Instance.Write(e.ExceptionObject as Exception);
+            trayMenu?.Close();
+            ClashProcessManager.Instance.Kill();
+            Loger.Instance.Close();
+        }
+
+        private static void applicationExceptionCause(object sender, ThreadExceptionEventArgs e)
+        {
+            Loger.Instance.Write(e.Exception);
+            trayMenu?.Close();
+            ClashProcessManager.Instance.Kill();
+            Loger.Instance.Close();
         }
 
         private static bool checkClashFile()

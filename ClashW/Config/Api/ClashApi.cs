@@ -116,6 +116,22 @@ namespace ClashW.Config.Api
             System.Diagnostics.Debug.WriteLine(response.Content);
         }
 
+        public void ReLoadRule()
+        {
+            var request = new RestRequest($"rules");
+            request.Method = Method.PUT;
+            var response = restClient.Execute(request);
+            if(response.IsSuccessful)
+            {
+                Loger.Instance.Write("规则重新解析成功");
+            } else
+            {
+                Loger.Instance.Write($"规则重新解析失败-{response.Content}");
+            }
+            
+            System.Diagnostics.Debug.WriteLine(response.Content);
+        }
+
         public void StartLoadLogMessage()
         {
             if(stopLoadLogMessage)

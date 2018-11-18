@@ -1,15 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 using ClashW.Config.Api;
+using ClashW.Config.FileSystemWather;
 using ClashW.Config.Yaml;
 using ClashW.Config.Yaml.Dao;
+using ClashW.Log;
 using ClashW.ProcessManager;
 using ClashW.Utils;
 using ClashW.View;
 using Newtonsoft.Json;
+using RestSharp;
 using static ClashW.Config.Api.ClashApi;
 
 namespace ClashW.Config
@@ -35,6 +42,7 @@ namespace ClashW.Config
 
         private YamlConfig yamlConfig;
         private ClashProcessManager clashProcessManager;
+        private Timer onlineRuleUpdateTimer;
 
         //public delegate void TrafficChangedHandler(ConfigController configController);
         //public event TrafficChangedHandler TrafficChangedEvent;
@@ -85,7 +93,86 @@ namespace ClashW.Config
                 YalmConfigManager.Instance.SavedYamlConfigChangedEvent += new YalmConfigManager.SavedYamlConfigChanged(savedYamlConfigChanged);
             }
             clashApi = new ClashApi($"http://{yamlConfig.ExternalController}");
+
+            UserRuleFileSystemWatcher.Instance.Start();
+            if(!String.IsNullOrEmpty(Properties.Settings.Default.OnlineRuleUrl))
+            {
+                startOnlineRuleUpdateTimer();
+            }
             initClashWConfig();
+        }
+        private void startOnlineRuleUpdateTimer()
+        {
+            if(onlineRuleUpdateTimer == null)
+            {
+                onlineRuleUpdateTimer = new Timer();
+            }
+            
+            onlineRuleUpdateTimer.BeginInit();
+            onlineRuleUpdateTimer.AutoReset = true;
+            DateTime preUpdateDateTime = Properties.Settings.Default.OnlineUpdateTime;
+            var interval = (DateTime.Now.ToFileTimeUtc() - preUpdateDateTime.ToFileTimeUtc()) / 1000;
+            if(interval >= Properties.Settings.Default.OnlineUpdateIntervalHour * 60 * 60 * 1000)
+            {
+                interval = 1;
+            }
+            else
+            {
+                interval = Properties.Settings.Default.OnlineUpdateIntervalHour * 60 * 60 * 1000 - interval;
+            }
+            onlineRuleUpdateTimer.Interval = interval;
+            onlineRuleUpdateTimer.Elapsed += new ElapsedEventHandler(onlineRuleTimeElapsedHandler);
+            onlineRuleUpdateTimer.EndInit();
+            if(!onlineRuleUpdateTimer.Enabled)
+            {
+                onlineRuleUpdateTimer.Start();
+            }
+        }
+
+        private void stopOnlineRuleUpdateTimer()
+        {
+            if(onlineRuleUpdateTimer != null)
+            {
+                onlineRuleUpdateTimer.Stop();
+                onlineRuleUpdateTimer.Dispose();
+                onlineRuleUpdateTimer = null;
+            }
+        }
+
+        private void onlineRuleTimeElapsedHandler(object sender, ElapsedEventArgs e)
+        {
+            Loger.Instance.Write("开始更新在线规则");
+            onlineRuleUpdateTimer.Interval = Properties.Settings.Default.OnlineUpdateIntervalHour * 60 * 60 * 1000;
+            if (!String.IsNullOrEmpty(Properties.Settings.Default.OnlineRuleUrl))
+            {
+                WebClient webClient = new WebClient();
+                webClient.DownloadFileCompleted += new AsyncCompletedEventHandler(onLineRuleDownloadComplete);
+                if(!Directory.Exists(AppContract.RULE_DIR))
+                {
+                    Directory.CreateDirectory(AppContract.RULE_DIR);
+                }
+                webClient.DownloadFileAsync(new Uri(Properties.Settings.Default.OnlineRuleUrl), AppContract.ONLINE_RULE_PATH);
+            }
+           
+        }
+
+        private void onLineRuleDownloadComplete(object sender, AsyncCompletedEventArgs e)
+        {
+            if(e.Error != null)
+            {
+                Loger.Instance.Write(e.Error);
+                return;
+            }
+
+            if(e.Cancelled)
+            {
+                Loger.Instance.Write("取消在线更新规则任务");
+                return;
+            }
+            Properties.Settings.Default.OnlineUpdateTime = DateTime.Now;
+            YalmConfigManager.Instance.UpdateRuleConfig();
+            Loger.Instance.Write("在线规则更新结束");
+
         }
 
         private void savedYamlConfigChanged(YalmConfigManager yalmConfigManager, YamlConfig yamlConfig)
@@ -292,6 +379,48 @@ namespace ClashW.Config
                     break;
             }
             return runningMode;
+        }
+
+        public void ReLoadRule()
+        {
+            if(YalmConfigManager.Instance.UpdateRuleConfig())
+            {
+                clashApi.ReLoadRule();
+            }
+        }
+
+        public void SetOnlineRuleUrl(string onlineRuleUrl, int cycleHour)
+        {
+            var savedUrl = Properties.Settings.Default.OnlineRuleUrl;
+            if (String.IsNullOrEmpty(savedUrl) && !String.IsNullOrEmpty(onlineRuleUrl))
+            {
+                Properties.Settings.Default.OnlineUpdateTime = new DateTime(2018, 1, 1);
+                stopOnlineRuleUpdateTimer();
+                startOnlineRuleUpdateTimer();
+                YalmConfigManager.Instance.UpdateRuleConfig();
+            }
+
+            if(String.IsNullOrEmpty(onlineRuleUrl))
+            {
+                stopOnlineRuleUpdateTimer();
+                Loger.Instance.Write("删除在线规则");
+                YalmConfigManager.Instance.ClearOnlineRule();
+                Properties.Settings.Default.OnlineUpdateTime = new DateTime(2018, 1, 1);
+            }
+
+            Properties.Settings.Default.OnlineRuleUrl = onlineRuleUrl;
+            Properties.Settings.Default.OnlineUpdateIntervalHour = cycleHour;
+            Properties.Settings.Default.Save();
+        }
+
+        public string GetOnlineRuleUrl()
+        {
+            return Properties.Settings.Default.OnlineRuleUrl;
+        }
+
+        public int GetOnlineRuleUpdateCycleHour()
+        {
+            return Properties.Settings.Default.OnlineUpdateIntervalHour;
         }
 
         public void StartLoadMessage(LogMessageHandler logMessageHandler)

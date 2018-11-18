@@ -14,5 +14,20 @@
     <Setting Name="TestUrl" Type="System.String" Scope="User">
       <Value Profile="(Default)">https://www.bing.com</Value>
     </Setting>
+    <Setting Name="UserRuleMD5" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="OnlineRuleUrl" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="OnlineRuleMD5" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="OnlineUpdateTime" Type="System.DateTime" Scope="User">
+      <Value Profile="(Default)">11/19/2018 00:21:00</Value>
+    </Setting>
+    <Setting Name="OnlineUpdateIntervalHour" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
