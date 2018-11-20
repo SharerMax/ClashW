@@ -17,7 +17,7 @@ namespace ClashW.ProcessManager
         private static ClashProcessManager clashProcessManager = null;
         private static readonly object padlock = new object();
         private Process process = null;
-        private static readonly string PROMCSS_RUN_PATH = AppContract.CLASH_EXE_PATH;
+        private static readonly string PROMCSS_RUN_PATH = AppContract.Path.CLASH_EXE_PATH;
 
         public delegate void OutPutHandler(string output);
         public event OutPutHandler OutputEvent;
@@ -66,7 +66,7 @@ namespace ClashW.ProcessManager
                 process.StartInfo.CreateNoWindow = true;
                 process.StartInfo.RedirectStandardOutput = true;
                 process.StartInfo.RedirectStandardError = true;
-                process.StartInfo.WorkingDirectory = AppContract.BIN_DIR;
+                process.StartInfo.WorkingDirectory = AppContract.Path.BIN_DIR;
                 process.StartInfo.FileName = PROMCSS_RUN_PATH;
                 process.StartInfo.Arguments = @"-d .";
                 process.OutputDataReceived += new DataReceivedEventHandler(process_data_received);
@@ -81,7 +81,7 @@ namespace ClashW.ProcessManager
 
         private void ensureSingleRun()
         {
-            var processArray = Process.GetProcessesByName(AppContract.CLASH_PROCESS_NAME);
+            var processArray = Process.GetProcessesByName(AppContract.Path.CLASH_PROCESS_NAME);
             foreach(Process p in processArray) {
                 if(!p.HasExited)
                 {
@@ -114,19 +114,20 @@ namespace ClashW.ProcessManager
             if(!String.IsNullOrEmpty(dataReceivedEventArgs.Data))
             {
                 string rawMessages = dataReceivedEventArgs.Data;
+                Loger.Instance.Write(rawMessages);
                 string regex = @"time=(\S+) level=(\S+) msg=(.+)";
                 Match matched = Regex.Match(rawMessages, regex);
                 string time = matched.Groups[1].Value;
                 string loglevel = matched.Groups[2].Value.ToUpper();
                 string msg = matched.Groups[3].Value;
-
-                if(loglevel.Equals("FATAL"))
+                
+                if (loglevel.Equals("FATAL"))
                 {
                     ProcessErrorEvnet?.Invoke(this, msg);
                 }
                 var outputData = rawMessages + Environment.NewLine;
                 // ThreadPool.QueueUserWorkItem(writeLogToFile, outputData);
-                Loger.Instance.Write(rawMessages);
+                
                 OutputEvent?.Invoke(outputData);
             }
         }

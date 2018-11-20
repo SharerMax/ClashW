@@ -128,7 +128,7 @@ namespace ClashW.View
             if (selectableProxyNameList != null && selectableProxyNameList.Count > 0)
             {
                 var proxyCount = selectableProxyNameList.Count;
-               
+                // 代理数 + 测速（1）
                 menuItems = new MenuItem[selectableProxyNameList.Count + 1];
 
                 for(var i = 0; i < proxyCount; i++)
@@ -372,17 +372,17 @@ namespace ClashW.View
 
         private void editeRuleMenuItem_clicked(object sender, EventArgs e)
         {
-            if (!Directory.Exists(AppContract.RULE_DIR))
+            if (!Directory.Exists(AppContract.Path.RULE_DIR))
             {
-                Directory.CreateDirectory(AppContract.RULE_DIR);
+                Directory.CreateDirectory(AppContract.Path.RULE_DIR);
             }
-            if (!File.Exists(AppContract.USER_RULE_PATH))
+            if (!File.Exists(AppContract.Path.USER_RULE_PATH))
             {
-                File.Create(AppContract.USER_RULE_PATH).Close();
+                File.Create(AppContract.Path.USER_RULE_PATH).Close();
             }
 
-            MessageBox.Show($"请手动编辑{AppContract.USER_RULE_NAME}文件，其规则命中优先级大于在线规则。", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            System.Diagnostics.Process.Start("explorer.exe", Path.GetFullPath(AppContract.RULE_DIR));
+            MessageBox.Show($"请手动编辑{AppContract.Path.USER_RULE_NAME}文件，其规则命中优先级大于在线规则。", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            System.Diagnostics.Process.Start("explorer.exe", Path.GetFullPath(AppContract.Path.RULE_DIR));
         }
 
     }

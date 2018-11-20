@@ -18,11 +18,11 @@ namespace ClashW.Config.FileSystemWather
         private long preChangeTime;
         private UserRuleFileSystemWatcher()
         {
-            if(!Directory.Exists(AppContract.RULE_DIR))
+            if(!Directory.Exists(AppContract.Path.RULE_DIR))
             {
-                Directory.CreateDirectory(AppContract.RULE_DIR);
+                Directory.CreateDirectory(AppContract.Path.RULE_DIR);
             }
-            fileSystemWatcher = new FileSystemWatcher(AppContract.RULE_DIR, AppContract.USER_RULE_NAME);
+            fileSystemWatcher = new FileSystemWatcher(AppContract.Path.RULE_DIR, AppContract.Path.USER_RULE_NAME);
             fileSystemWatcher.NotifyFilter = NotifyFilters.LastWrite;
             fileSystemEvent = new FileSystemEventHandler(handleFileSystemEvent);
             //fileSystemWatcher.Created += fileSystemEvent;

@@ -1,4 +1,5 @@
 ﻿using ClashW.Config.Yaml.Dao;
+using ClashW.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,17 +22,17 @@ namespace ClashW.Config
             }
 
             var selectProxyGroup = new ProxyGroup();
-            selectProxyGroup.Name = "Proxy";
+            selectProxyGroup.Name = AppContract.ReservedKey.PROXY_POLICY_SELECT_NAME;
             selectProxyGroup.Type = "select";
             selectProxyGroup.Proxies = new List<string>();
             var autoProxyGroup = new ProxyGroup();
-            autoProxyGroup.Name = "Auto";
+            autoProxyGroup.Name = AppContract.ReservedKey.PROXY_POLICY_URL_TEST_NAME;
             autoProxyGroup.Type = "url-test";
             autoProxyGroup.Url = testUrl;
             autoProxyGroup.Interval = 500;
             autoProxyGroup.Proxies = new List<string>();
             var fallbackAutoGroup = new ProxyGroup();
-            fallbackAutoGroup.Name = "FallbackAuto";
+            fallbackAutoGroup.Name = AppContract.ReservedKey.PROXY_POLICY_FALLBACK_NAME;
             fallbackAutoGroup.Type = "fallback";
             fallbackAutoGroup.Url = testUrl;
             fallbackAutoGroup.Interval = 500;
@@ -44,8 +45,8 @@ namespace ClashW.Config
                 autoProxyGroup.Proxies.Add(proxyName);
                 fallbackAutoGroup.Proxies.Add(proxyName);
             }
-            selectProxyGroup.Proxies.Add("Auto");
-            selectProxyGroup.Proxies.Add("FallbackAuto");
+            selectProxyGroup.Proxies.Add(AppContract.ReservedKey.PROXY_POLICY_URL_TEST_NAME);
+            selectProxyGroup.Proxies.Add(AppContract.ReservedKey.PROXY_POLICY_FALLBACK_NAME);
             yamlConfig.ProxyGroups.Add(autoProxyGroup);
             yamlConfig.ProxyGroups.Add(fallbackAutoGroup);
             yamlConfig.ProxyGroups.Add(selectProxyGroup);

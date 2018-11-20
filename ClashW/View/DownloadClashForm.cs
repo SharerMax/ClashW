@@ -34,9 +34,9 @@ namespace ClashW.View
         {
             ensureUsedDirectory();
             clashWebClient = generateWebClient();
-            clashWebClient.DownloadFileAsync(new Uri(CLASH_DOWNLOAD_URL), AppContract.CLASH_DOWNLOAD_PATH);
+            clashWebClient.DownloadFileAsync(new Uri(CLASH_DOWNLOAD_URL), AppContract.Path.CLASH_DOWNLOAD_PATH);
             geoipWebClient = generateWebClient();
-            geoipWebClient.DownloadFileAsync(new Uri(GEOIP_DOWNLOAD_URL), AppContract.GEOIP_DOWNLOAD_PATH);
+            geoipWebClient.DownloadFileAsync(new Uri(GEOIP_DOWNLOAD_URL), AppContract.Path.GEOIP_DOWNLOAD_PATH);
         }
 
         private WebClient generateWebClient()
@@ -49,14 +49,14 @@ namespace ClashW.View
 
         private void ensureUsedDirectory()
         {
-            if (!Directory.Exists(AppContract.DOWNLOAD_TEMP_DIR))
+            if (!Directory.Exists(AppContract.Path.DOWNLOAD_TEMP_DIR))
             {
-                Directory.CreateDirectory(AppContract.DOWNLOAD_TEMP_DIR);
+                Directory.CreateDirectory(AppContract.Path.DOWNLOAD_TEMP_DIR);
             }
 
-            if(!Directory.Exists(AppContract.BIN_DIR))
+            if(!Directory.Exists(AppContract.Path.BIN_DIR))
             {
-                Directory.CreateDirectory(AppContract.BIN_DIR);
+                Directory.CreateDirectory(AppContract.Path.BIN_DIR);
             }
         }
 
@@ -93,27 +93,27 @@ namespace ClashW.View
         private void unZipClashFile()
         {
             FastZip fastZip = new FastZip();
-            fastZip.ExtractZip(AppContract.CLASH_DOWNLOAD_PATH, AppContract.DOWNLOAD_TEMP_DIR, string.Empty);
-            if(File.Exists(AppContract.CLASH_EXE_PATH))
+            fastZip.ExtractZip(AppContract.Path.CLASH_DOWNLOAD_PATH, AppContract.Path.DOWNLOAD_TEMP_DIR, string.Empty);
+            if(File.Exists(AppContract.Path.CLASH_EXE_PATH))
             {
-                File.Delete(AppContract.CLASH_EXE_PATH);
+                File.Delete(AppContract.Path.CLASH_EXE_PATH);
             }
-            File.Move($"{AppContract.DOWNLOAD_TEMP_DIR}clash-win64.exe", AppContract.CLASH_EXE_PATH);
+            File.Move($"{AppContract.Path.DOWNLOAD_TEMP_DIR}clash-win64.exe", AppContract.Path.CLASH_EXE_PATH);
         }
 
         private void unTGZGeoIpFile()
         {
-            Stream inStream = File.OpenRead(AppContract.GEOIP_DOWNLOAD_PATH);
+            Stream inStream = File.OpenRead(AppContract.Path.GEOIP_DOWNLOAD_PATH);
             Stream gzipStream = new GZipInputStream(inStream);
 
             TarArchive tarArchive = TarArchive.CreateInputTarArchive(gzipStream);
-            tarArchive.ExtractContents(AppContract.DOWNLOAD_TEMP_DIR);
+            tarArchive.ExtractContents(AppContract.Path.DOWNLOAD_TEMP_DIR);
             tarArchive.Close();
 
             gzipStream.Close();
             inStream.Close();
            
-            string[] directorPath = Directory.GetDirectories(AppContract.DOWNLOAD_TEMP_DIR);
+            string[] directorPath = Directory.GetDirectories(AppContract.Path.DOWNLOAD_TEMP_DIR);
             for(var index = 0; index < directorPath.Length; index++)
             {
                 System.Diagnostics.Debug.WriteLine(directorPath[index]);
@@ -125,11 +125,11 @@ namespace ClashW.View
                         System.Diagnostics.Debug.WriteLine(filePath[index]);
                         if (filePath[fileIndex].EndsWith(".mmdb"))
                         {
-                            if(File.Exists(AppContract.CLASH_GEOIP_PATH))
+                            if(File.Exists(AppContract.Path.CLASH_GEOIP_PATH))
                             {
-                                File.Delete(AppContract.CLASH_GEOIP_PATH);
+                                File.Delete(AppContract.Path.CLASH_GEOIP_PATH);
                             }
-                            File.Move(filePath[fileIndex], AppContract.CLASH_GEOIP_PATH);
+                            File.Move(filePath[fileIndex], AppContract.Path.CLASH_GEOIP_PATH);
                             break;
                         }
                     }

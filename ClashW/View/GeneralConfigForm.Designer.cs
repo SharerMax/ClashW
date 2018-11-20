@@ -31,6 +31,8 @@
             this.socksNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.socksPortLabel = new System.Windows.Forms.Label();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.testUrlTextBox = new System.Windows.Forms.TextBox();
+            this.urlTestLabel = new System.Windows.Forms.Label();
             this.externalSecretLabel = new System.Windows.Forms.Label();
             this.externalSecretTextbox = new System.Windows.Forms.TextBox();
             this.httpPortLabel = new System.Windows.Forms.Label();
@@ -44,8 +46,6 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.ResetButton = new System.Windows.Forms.Button();
             this.saveButton = new System.Windows.Forms.Button();
-            this.urlTestLabel = new System.Windows.Forms.Label();
-            this.testUrlTextBox = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.socksNumericUpDown)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.httpNumericUpDown)).BeginInit();
@@ -122,6 +122,25 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 48F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(547, 344);
             this.tableLayoutPanel1.TabIndex = 0;
+            // 
+            // testUrlTextBox
+            // 
+            this.testUrlTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.testUrlTextBox.Location = new System.Drawing.Point(178, 301);
+            this.testUrlTextBox.Name = "testUrlTextBox";
+            this.testUrlTextBox.Size = new System.Drawing.Size(356, 39);
+            this.testUrlTextBox.TabIndex = 13;
+            // 
+            // urlTestLabel
+            // 
+            this.urlTestLabel.AutoSize = true;
+            this.urlTestLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.urlTestLabel.Location = new System.Drawing.Point(13, 298);
+            this.urlTestLabel.Name = "urlTestLabel";
+            this.urlTestLabel.Size = new System.Drawing.Size(159, 48);
+            this.urlTestLabel.TabIndex = 12;
+            this.urlTestLabel.Text = "测速链接：";
+            this.urlTestLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // externalSecretLabel
             // 
@@ -273,25 +292,6 @@
             this.saveButton.Text = "保存";
             this.saveButton.UseVisualStyleBackColor = true;
             this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
-            // 
-            // urlTestLabel
-            // 
-            this.urlTestLabel.AutoSize = true;
-            this.urlTestLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.urlTestLabel.Location = new System.Drawing.Point(13, 298);
-            this.urlTestLabel.Name = "urlTestLabel";
-            this.urlTestLabel.Size = new System.Drawing.Size(159, 48);
-            this.urlTestLabel.TabIndex = 12;
-            this.urlTestLabel.Text = "测速链接：";
-            this.urlTestLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // testUrlTextBox
-            // 
-            this.testUrlTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.testUrlTextBox.Location = new System.Drawing.Point(178, 301);
-            this.testUrlTextBox.Name = "testUrlTextBox";
-            this.testUrlTextBox.Size = new System.Drawing.Size(356, 39);
-            this.testUrlTextBox.TabIndex = 13;
             // 
             // GeneralConfigForm
             // 

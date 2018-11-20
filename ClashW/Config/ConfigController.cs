@@ -147,11 +147,11 @@ namespace ClashW.Config
             {
                 WebClient webClient = new WebClient();
                 webClient.DownloadFileCompleted += new AsyncCompletedEventHandler(onLineRuleDownloadComplete);
-                if(!Directory.Exists(AppContract.RULE_DIR))
+                if(!Directory.Exists(AppContract.Path.RULE_DIR))
                 {
-                    Directory.CreateDirectory(AppContract.RULE_DIR);
+                    Directory.CreateDirectory(AppContract.Path.RULE_DIR);
                 }
-                webClient.DownloadFileAsync(new Uri(Properties.Settings.Default.OnlineRuleUrl), AppContract.ONLINE_RULE_PATH);
+                webClient.DownloadFileAsync(new Uri(Properties.Settings.Default.OnlineRuleUrl), AppContract.Path.ONLINE_RULE_PATH);
             }
            
         }

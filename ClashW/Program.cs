@@ -98,11 +98,13 @@ namespace ClashW
             {
                 trayMenu.ShowErrorMessage("ERROR", error);
             }
-            var errorMessage = error + Environment.NewLine + "退出程序";
+            // var errorMessage = error + Environment.NewLine + "退出程序";
             MessageBox.Show(error, "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            Application.Exit();
+            //Application.Exit();
+            trayMenu?.Close();
+            ClashProcessManager.Instance.Kill();
+            Loger.Instance.Close();
             Environment.Exit(-1);
-            
         }
 
         private static void unHandlerExceptionCause(object sender, UnhandledExceptionEventArgs e)
@@ -124,7 +126,7 @@ namespace ClashW
         private static bool checkClashFile()
         {
             //return false;
-            return File.Exists(AppContract.CLASH_EXE_PATH) && File.Exists(AppContract.CLASH_GEOIP_PATH);
+            return File.Exists(AppContract.Path.CLASH_EXE_PATH) && File.Exists(AppContract.Path.CLASH_GEOIP_PATH);
         }
     }
 }

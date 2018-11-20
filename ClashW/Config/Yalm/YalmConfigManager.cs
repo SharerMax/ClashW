@@ -17,7 +17,7 @@ namespace ClashW.Config.Yaml
     {
         private static YalmConfigManager instance = null;
         private static readonly object padlock = new object();
-        private static readonly string CONFIG_FILE_PATH = AppContract.CLASH_CONFIG_PATH;
+        private static readonly string CONFIG_FILE_PATH = AppContract.Path.CLASH_CONFIG_PATH;
 
         public delegate void SavedYamlConfigChanged(YalmConfigManager sender, YamlConfig yamlConfig);
         public event SavedYamlConfigChanged SavedYamlConfigChangedEvent;
@@ -78,11 +78,11 @@ namespace ClashW.Config.Yaml
 
         public YamlConfig GetUserRuleYamlConfig()
         {
-            if(!File.Exists(AppContract.USER_RULE_PATH))
+            if(!File.Exists(AppContract.Path.USER_RULE_PATH))
             {
                 return null;
             }
-            using (var yarmConfigFileStream = File.Open(AppContract.USER_RULE_PATH, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+            using (var yarmConfigFileStream = File.Open(AppContract.Path.USER_RULE_PATH, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
             {
                 YamlConfig userRuleYamlConfig;
                 var yarmConfigFileStreamReader = new StreamReader(yarmConfigFileStream);
@@ -94,11 +94,11 @@ namespace ClashW.Config.Yaml
 
         public YamlConfig GetOnlineRuleYamlConfig()
         {
-            if(!File.Exists(AppContract.ONLINE_RULE_PATH))
+            if(!File.Exists(AppContract.Path.ONLINE_RULE_PATH))
             {
                 return null;
             }
-            using (var yarmConfigFileStream = File.Open(AppContract.ONLINE_RULE_PATH, FileMode.Open, FileAccess.Read, FileShare.Read))
+            using (var yarmConfigFileStream = File.Open(AppContract.Path.ONLINE_RULE_PATH, FileMode.Open, FileAccess.Read, FileShare.Read))
             {
                 YamlConfig onlineRuleYamlConfig;
                 var yarmConfigFileStreamReader = new StreamReader(yarmConfigFileStream);
@@ -129,7 +129,7 @@ namespace ClashW.Config.Yaml
                     yamlConfig.RuleList = userRule == null ? null : userRule.RuleList;
                 }
                 needUpdate = true;
-                Properties.Settings.Default.UserRuleMD5 = MD5Utils.ComputeFileMD5(AppContract.USER_RULE_PATH);
+                Properties.Settings.Default.UserRuleMD5 = MD5Utils.ComputeFileMD5(AppContract.Path.USER_RULE_PATH);
             }
 
             if(OnlineRuleIsChanged())
@@ -164,7 +164,7 @@ namespace ClashW.Config.Yaml
                     yamlConfig.RuleList?.Add(finalUserRule);
                 }
                 needUpdate = true;
-                Properties.Settings.Default.UserRuleMD5 = MD5Utils.ComputeFileMD5(AppContract.ONLINE_RULE_PATH);
+                Properties.Settings.Default.UserRuleMD5 = MD5Utils.ComputeFileMD5(AppContract.Path.ONLINE_RULE_PATH);
             }
 
             if(needUpdate)
@@ -194,11 +194,11 @@ namespace ClashW.Config.Yaml
         {
             var serializer = new SerializerBuilder().Build();
             var yaml = serializer.Serialize(yamlConfig);
-            if(!Directory.Exists(AppContract.RULE_DIR))
+            if(!Directory.Exists(AppContract.Path.RULE_DIR))
             {
-                Directory.CreateDirectory(AppContract.RULE_DIR);
+                Directory.CreateDirectory(AppContract.Path.RULE_DIR);
             }
-            using (var yamlConfigFileStream = File.Open(AppContract.USER_RULE_PATH, FileMode.OpenOrCreate, FileAccess.Write, FileShare.ReadWrite))
+            using (var yamlConfigFileStream = File.Open(AppContract.Path.USER_RULE_PATH, FileMode.OpenOrCreate, FileAccess.Write, FileShare.ReadWrite))
             {
                 yamlConfigFileStream.SetLength(0);
                 var yamlConfigFileStreamWriter = new StreamWriter(yamlConfigFileStream);
@@ -206,7 +206,7 @@ namespace ClashW.Config.Yaml
                 yamlConfigFileStreamWriter.Flush();
                 yamlConfigFileStreamWriter.Close();
             }
-            Properties.Settings.Default.UserRuleMD5 = MD5Utils.ComputeFileMD5(AppContract.USER_RULE_PATH);
+            Properties.Settings.Default.UserRuleMD5 = MD5Utils.ComputeFileMD5(AppContract.Path.USER_RULE_PATH);
             Properties.Settings.Default.Save();
         }
 
@@ -259,20 +259,20 @@ namespace ClashW.Config.Yaml
         public static bool UserRuleIsChanged()
         {
             string originMD5 = Properties.Settings.Default.UserRuleMD5;
-            return !CompareFileMD5(originMD5, AppContract.USER_RULE_PATH);
+            return !CompareFileMD5(originMD5, AppContract.Path.USER_RULE_PATH);
         }
 
         public static bool OnlineRuleIsChanged()
         {
             string originMD5 = Properties.Settings.Default.OnlineRuleMD5;
-            return !CompareFileMD5(originMD5, AppContract.ONLINE_RULE_PATH);
+            return !CompareFileMD5(originMD5, AppContract.Path.ONLINE_RULE_PATH);
         }
 
         public void ClearOnlineRule()
         {
-            if(File.Exists(AppContract.ONLINE_RULE_PATH))
+            if(File.Exists(AppContract.Path.ONLINE_RULE_PATH))
             {
-                File.Delete(AppContract.ONLINE_RULE_PATH);
+                File.Delete(AppContract.Path.ONLINE_RULE_PATH);
             }
             UpdateRuleConfig();
         }
