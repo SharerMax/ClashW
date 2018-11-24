@@ -37,6 +37,7 @@ namespace ClashW.View
         private MenuItem onlineRuleMenuItem;
         private MenuItem editeRuleMenuItem;
         private MenuItem importFormClipboard;
+        private MenuItem issueMenuItem;
         private RunningMode runningMode;
         private List<Proxy> proxyList;
         
@@ -95,7 +96,7 @@ namespace ClashW.View
             trafficViewMenuItem = new MenuItem("流量...", new EventHandler(trafficViewMenuItem_clicked));
 
             var ruleMenuItemGroup = creatMenuGroup("规则配置", createRuleMenuItems());
-
+            issueMenuItem = new MenuItem("反馈", new EventHandler(issueMenuItem_clicked));
             contextMenu = new ContextMenu(new MenuItem[] {
                 autoBootMenuItem,
                 systemProxyMenuItem,
@@ -112,6 +113,7 @@ namespace ClashW.View
                 trafficViewMenuItem,
                 ruleMenuItemGroup,
                 new MenuItem("-"),
+                issueMenuItem,
                 new MenuItem("退出", new EventHandler(exitMenuItem_clicked))
             });
             notify.ContextMenu = contextMenu;
@@ -278,6 +280,11 @@ namespace ClashW.View
         private void showTrafficViewForm()
         {
 
+        }
+
+        private void issueMenuItem_clicked(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://github.com/SharerMax/ClashW/issues");
         }
 
         private void exitMenuItem_clicked(object sender, EventArgs e)
