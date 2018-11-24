@@ -36,6 +36,7 @@ namespace ClashW.View
         private MenuItem trafficViewMenuItem;
         private MenuItem onlineRuleMenuItem;
         private MenuItem editeRuleMenuItem;
+        private MenuItem importFormClipboard;
         private RunningMode runningMode;
         private List<Proxy> proxyList;
         
@@ -88,6 +89,7 @@ namespace ClashW.View
 
             proxyServerMenuItemGroup = creatMenuGroup("服务器", createProxyListMenuItems());
             ConfigController.Instance.ProxyChangedEvent += new ConfigController.ProxyListChangedHandler(proxyListChanged);
+            importFormClipboard = new MenuItem("从剪贴板导入", new EventHandler(importFormClipboardMenuitem_clicked));
 
             generalConfigMenuItem = new MenuItem("通用配置...", new EventHandler(generalConfigMenuItem_clicked));
             trafficViewMenuItem = new MenuItem("流量...", new EventHandler(trafficViewMenuItem_clicked));
@@ -103,6 +105,7 @@ namespace ClashW.View
                 ruleRunningModeMenuItem,
                 new MenuItem("-"),
                 proxyServerMenuItemGroup,
+                importFormClipboard,
                 new MenuItem("-"),
                 logFormMenuItem,
                 generalConfigMenuItem,
@@ -150,12 +153,9 @@ namespace ClashW.View
 
         private MenuItem[] createRuleMenuItems()
         {
-            
-            return new MenuItem[] 
-            {
-                new MenuItem("在线规则...", new EventHandler(onlineRuleMenuItem_clicked)),
-                new MenuItem("编辑规则...", new EventHandler(editeRuleMenuItem_clicked))
-            };
+            onlineRuleMenuItem = new MenuItem("在线规则...", new EventHandler(onlineRuleMenuItem_clicked));
+            editeRuleMenuItem = new MenuItem("编辑规则...", new EventHandler(editeRuleMenuItem_clicked));
+            return new MenuItem[] { onlineRuleMenuItem, editeRuleMenuItem };
         }
 
         internal void Show()
@@ -348,6 +348,26 @@ namespace ClashW.View
             }
             ConfigController.Instance.SelecteProxyByName((string)proxyItem.Tag);
             currentSelectedProxyMenuItem = proxyItem;
+        }
+
+        private void importFormClipboardMenuitem_clicked(object sender, EventArgs e)
+        {
+            IDataObject dataObject = Clipboard.GetDataObject();
+            if(dataObject.GetDataPresent(DataFormats.StringFormat))
+            {
+                string clipboradData = dataObject.GetData(DataFormats.StringFormat).ToString().Trim();
+                System.Diagnostics.Debug.Write(clipboradData);
+                Proxy proxy = ShareSchemeParser.ParseToProxy(clipboradData);
+                if(proxy != null)
+                {
+                    ConfigController.Instance.AddProxy(proxy);
+                    ShowMessage("剪贴板导入", $"{proxy.Name}导入成功");
+                }
+                else
+                {
+                    ShowErrorMessage("剪贴板导入", "不支持的格式");
+                }
+            }
         }
 
         private void proxyDelayItem_clicked(object sender, EventArgs e)

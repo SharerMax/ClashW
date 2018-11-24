@@ -12,6 +12,7 @@ namespace ClashW.Config
     {
         private YamlConfig yamlConfig;
         private string testUrl;
+        private bool needRestartClash;
         public ConfigEditor()
         {
             yamlConfig = YalmConfigManager.Instance.GetYamlConfig();
@@ -37,6 +38,7 @@ namespace ClashW.Config
         public void SetExternalController(string externalController)
         {
             yamlConfig.ExternalController = externalController;
+            needRestartClash = true;
         }
 
         public void SetExteranlControllerSecret(string secret)
@@ -48,6 +50,7 @@ namespace ClashW.Config
         {
             yamlConfig.ProxyList.Add(proxy);
             ConfigHelper.GenerateProxyGroup(yamlConfig, Properties.Settings.Default.TestUrl);
+            needRestartClash = true;
         }
 
         public void AddProxy(int index, Proxy proxy)
@@ -61,14 +64,16 @@ namespace ClashW.Config
             {
                 throw new ArgumentOutOfRangeException($"index 超出范围，最大长度为{yamlConfig.ProxyList.Count}");
             }
-
+            
             yamlConfig.ProxyList.Insert(index, proxy);
+            needRestartClash = true;
         }
 
         public void RemoveProxy(Proxy proxy)
         {
             yamlConfig.ProxyList.Remove(proxy);
             ConfigHelper.GenerateProxyGroup(yamlConfig, Properties.Settings.Default.TestUrl);
+            needRestartClash = true;
         }
 
         public void RemoveProxyByName(string name)
@@ -122,10 +127,14 @@ namespace ClashW.Config
                 Properties.Settings.Default.TestUrl = testUrl;
                 Properties.Settings.Default.Save();
                 ConfigHelper.GenerateProxyGroup(yamlConfig, testUrl);
+                needRestartClash = true;
             }
-            
+            // api 修改
             YalmConfigManager.Instance.SaveYamlConfigFile(yamlConfig);
-            ProcessManager.ClashProcessManager.Instance.Restart();
+            if(needRestartClash)
+            {
+                ProcessManager.ClashProcessManager.Instance.Restart();
+            }
         }
 
         private void savedYamlConfig(YalmConfigManager sender, YamlConfig yamlConfig)

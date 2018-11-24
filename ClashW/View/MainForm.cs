@@ -436,7 +436,7 @@ namespace ClashW.View
                     vmessUUIDTextBox.Text = proxy.Uuid;
                     vmessAlterIDTextBox.Text = proxy.AlterId;
                     vmessChiperComboBox.SelectedItem = proxy.Cipher;
-                    vmessNetworkTypeComboBox.SelectedItem = String.IsNullOrEmpty(proxy.Network) ? "TCP": proxy.Network;
+                    vmessNetworkTypeComboBox.SelectedItem = String.IsNullOrEmpty(proxy.Network) ? "TCP": proxy.Network.ToUpper();
                     vmessWsPathTextBox.Text = proxy.WsPath;
                     tlsCheckBox.Checked = proxy.TLS;
                     tlsSkipVerifyCheckBox.Checked = proxy.SkipCertVerify;
