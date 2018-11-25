@@ -1,4 +1,5 @@
 ﻿using ClashW.Config;
+using ClashW.Utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -25,6 +26,7 @@ namespace ClashW.View
 
         private void saveButton_Click(object sender, EventArgs e)
         {
+            
             var httpPort = (int)httpNumericUpDown.Value;
             var socksPort = (int)socksNumericUpDown.Value;
             var externalController = externalContrallTextbox.Text.Trim();
@@ -49,6 +51,23 @@ namespace ClashW.View
                     break;
 
             }
+            if(PortUtils.TcpPortIsUsed(httpPort))
+            {
+                MessageBox.Show($"端口冲突（{httpPort}）", "端口冲突", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (PortUtils.TcpPortIsUsed(socksPort))
+            {
+                MessageBox.Show($"端口冲突（{socksPort}）", "端口冲突", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (PortUtils.TcpPortIsUsed(Convert.ToInt32(externalController.Split(':')[1])))
+            {
+                MessageBox.Show($"端口冲突（{Convert.ToInt32(externalController.Split(':')[1])}）", "端口冲突", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             configEditor.SetListenedHttpPort(httpPort);
             configEditor.SetListenedSocksPort(socksPort);
             configEditor.AllowLan(allowLan);
@@ -56,7 +75,10 @@ namespace ClashW.View
             configEditor.SetExteranlControllerSecret(externalControllerSecret);
             configEditor.SetLogLevel(logLevel);
             configEditor.Commit();
+            DialogResult = DialogResult.OK;
             MessageBox.Show("保存成功", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            Close();
+
         }
 
         private void GeneralConfigForm_Load(object sender, EventArgs e)
@@ -81,6 +103,19 @@ namespace ClashW.View
                 case LogLevel.DEBUG:
                     logLevelComboBox.SelectedItem = ConfigController.LOG_LEVEL_DEBUG.ToUpper();
                     break;
+            }
+        }
+
+        private void GeneralConfigForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            System.Diagnostics.Debug.WriteLine(e.CloseReason);
+        }
+
+        private void GeneralConfigForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if(DialogResult != DialogResult.OK)
+            {
+                DialogResult = DialogResult.Cancel;
             }
         }
     }

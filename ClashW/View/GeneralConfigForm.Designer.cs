@@ -307,6 +307,8 @@
             this.Name = "GeneralConfigForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "通用配置";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.GeneralConfigForm_FormClosing);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.GeneralConfigForm_FormClosed);
             this.Load += new System.EventHandler(this.GeneralConfigForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.socksNumericUpDown)).EndInit();
             this.tableLayoutPanel1.ResumeLayout(false);

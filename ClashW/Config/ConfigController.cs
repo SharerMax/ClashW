@@ -59,6 +59,9 @@ namespace ClashW.Config
         public delegate void SelectedProxyChangedHandler(ConfigController configController, Proxy proxy);
         public event SelectedProxyChangedHandler SelectedProxyChangedEvent;
 
+        public delegate void PortErrorHandler(ConfigController configController, PortErrorEventArgs portErrorEventArgs);
+        public event PortErrorHandler PortErrorEvent;
+
         private ClashApi clashApi;
 
         private const string DEFAULT_PROXY_HOST = "127.0.0.1:7891";
@@ -80,27 +83,55 @@ namespace ClashW.Config
         }
         private ConfigController()
         {
-
-        }
-
-        public void Init(ClashProcessManager clashProcessManager)
-        {
-            this.clashProcessManager = clashProcessManager;
-            this.clashProcessManager.ProcessRestartEvent += new ClashProcessManager.ProcessRestartHandler(processRestarted);
             if (yamlConfig == null)
             {
-                yamlConfig = YalmConfigManager.Instance.GetYamlConfig();
                 YalmConfigManager.Instance.SavedYamlConfigChangedEvent += new YalmConfigManager.SavedYamlConfigChanged(savedYamlConfigChanged);
+                yamlConfig = YalmConfigManager.Instance.GetYamlConfig();  
             }
-            clashApi = new ClashApi($"http://{yamlConfig.ExternalController}");
-
-            UserRuleFileSystemWatcher.Instance.Start();
-            if(!String.IsNullOrEmpty(Properties.Settings.Default.OnlineRuleUrl))
-            {
-                startOnlineRuleUpdateTimer();
-            }
-            initClashWConfig();
         }
+
+        public bool Start(ClashProcessManager clashProcessManager)
+        {
+            this.clashProcessManager = clashProcessManager;
+            if (checkReadyRunConfig())
+            {
+                clashProcessManager.Start();
+                clashApi = new ClashApi($"http://{yamlConfig.ExternalController}");
+
+                UserRuleFileSystemWatcher.Instance.Start();
+                if (!String.IsNullOrEmpty(Properties.Settings.Default.OnlineRuleUrl))
+                {
+                    startOnlineRuleUpdateTimer();
+                }
+                initClashWConfig();
+                return true;
+            }
+            return false;
+        }
+
+        private bool checkReadyRunConfig()
+        {
+            int httpPort = yamlConfig.Port;
+            int socksPort = yamlConfig.SocksPort;
+            int externalPort = Convert.ToInt32(yamlConfig.ExternalController.Split(':')[1]);
+            if (PortUtils.TcpPortIsUsed(httpPort))
+            {
+                PortErrorEvent?.Invoke(this, new PortErrorEventArgs(httpPort, PortErrorEventArgs.HTTP_PORT_ERROR));
+                return false;
+            }
+            if (PortUtils.TcpPortIsUsed(socksPort))
+            {
+                PortErrorEvent?.Invoke(this, new PortErrorEventArgs(socksPort, PortErrorEventArgs.SOCKS_PORT_ERROR));
+                return false;
+            }
+            if (PortUtils.TcpPortIsUsed(externalPort))
+            {
+                PortErrorEvent?.Invoke(this, new PortErrorEventArgs(externalPort, PortErrorEventArgs.EXTERNAL_CONTROL_PORT));
+                return false;
+            }
+            return true;
+        }
+
         private void startOnlineRuleUpdateTimer()
         {
             if(onlineRuleUpdateTimer == null)
@@ -178,7 +209,11 @@ namespace ClashW.Config
         private void savedYamlConfigChanged(YalmConfigManager yalmConfigManager, YamlConfig yamlConfig)
         {
             this.yamlConfig = yamlConfig;
-            initClashWConfig();
+            if(clashProcessManager.IsRunning)
+            {
+                initClashWConfig();
+            }
+            
         }
 
         private void processRestarted(ClashProcessManager processManager)
@@ -391,7 +426,10 @@ namespace ClashW.Config
 
         public void SetConfig(int port, int socksPort, bool allowLan, string mode, string logLevel)
         {
-            clashApi.Config(port, socksPort, allowLan, mode, logLevel);
+            if(clashProcessManager.IsRunning)
+            {
+                clashApi.Config(port, socksPort, allowLan, mode, logLevel);
+            }
         }
 
         public void SetOnlineRuleUrl(string onlineRuleUrl, int cycleHour)

@@ -30,7 +30,8 @@ namespace ClashW
             Application.SetCompatibleTextRenderingDefault(false);
             Application.ThreadException += new ThreadExceptionEventHandler(applicationExceptionCause);
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(unHandlerExceptionCause);
-            if(checkClashFile())
+            Application.ApplicationExit += new EventHandler(application_exit);
+            if (checkClashFile())
             {
                 start();
             }
@@ -46,6 +47,7 @@ namespace ClashW
                     Application.Exit();
                 }
             }
+            Application.Run();
         }
 
         static void showMainForm(object sender, EventArgs e)
@@ -61,18 +63,19 @@ namespace ClashW
             ConfigController.EnsureRunningConfig();
             var clashProcessManager = ClashProcessManager.Instance;
             clashProcessManager.ProcessErrorEvnet += new ClashProcessManager.ProcessErrorHandler(clashProcessError);
-            clashProcessManager.Start();
-            ConfigController.Instance.Init(clashProcessManager);
-            trayMenu = new TrayMenu();
-            trayMenu.Show();
-            Application.ApplicationExit += new EventHandler(application_exit);
-            trayMenu.ShowMessage("Running", "ClashW已启动");
-            if(isDefaultConfig)
+            ConfigController.Instance.PortErrorEvent += new ConfigController.PortErrorHandler(portErrorHandler);
+            if(ConfigController.Instance.Start(clashProcessManager))
             {
-                ShowDefaultGeneralConfigForm();
+                trayMenu = new TrayMenu();
+                trayMenu.Show();
+                
+                trayMenu.ShowMessage("Running", "ClashW已启动");
+                if (isDefaultConfig)
+                {
+                    ShowDefaultGeneralConfigForm();
+                }
             }
             
-            Application.Run();
         }
 
         private static void ShowDefaultGeneralConfigForm()
@@ -127,6 +130,36 @@ namespace ClashW
         {
             //return false;
             return File.Exists(AppContract.Path.CLASH_EXE_PATH) && File.Exists(AppContract.Path.CLASH_GEOIP_PATH);
+        }
+
+        private static void portErrorHandler(ConfigController configController, PortErrorEventArgs portErrorEventArgs)
+        {
+            var message = $"端口：{portErrorEventArgs.Port} 不可用";
+            Loger.Instance.Write(message);
+            MessageBox.Show(message);
+            GeneralConfigForm configForm = new GeneralConfigForm();
+            DialogResult result =  configForm.ShowDialog();
+            if(result == DialogResult.OK)
+            {
+                var isDefaultConfig = !ConfigController.CheckYamlConfigFileExists();
+                var clashProcessManager = ClashProcessManager.Instance;
+                if (ConfigController.Instance.Start(clashProcessManager))
+                {
+                    trayMenu = new TrayMenu();
+                    trayMenu.Show();
+
+                    trayMenu.ShowMessage("Running", "ClashW已启动");
+                    if (isDefaultConfig)
+                    {
+                        ShowDefaultGeneralConfigForm();
+                    }
+                }
+            }
+            else
+            {
+                Application.Exit();
+            }
+            
         }
     }
 }

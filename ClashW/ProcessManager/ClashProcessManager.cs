@@ -34,6 +34,14 @@ namespace ClashW.ProcessManager
         public delegate void ProcessRestartHandler(ClashProcessManager sender);
         public event ProcessRestartHandler ProcessRestartEvent;
 
+        public bool IsRunning
+        {
+            get
+            {
+                return process != null && !process.HasExited;
+            }
+        }
+
         private ClashProcessManager()
         {
 
@@ -124,6 +132,7 @@ namespace ClashW.ProcessManager
                 if (loglevel.Equals("FATAL"))
                 {
                     ProcessErrorEvnet?.Invoke(this, msg);
+                    Kill();
                 }
                 var outputData = rawMessages + Environment.NewLine;
                 // ThreadPool.QueueUserWorkItem(writeLogToFile, outputData);
