@@ -98,7 +98,7 @@ namespace ClashW.Config.Api
         {
             var request = new RestRequest($"configs");
             request.Method = Method.PUT;
-            var jsonBody = $"{{\"port\":{port}, \"socket-port\":{socksPort},\"allow-lan\":${allowLan},\"mode\":\"{mode}\",\"log-level\":\"{logLevel}\"}}";
+            var jsonBody = $"{{\"port\":{port}, \"socket-port\":{socksPort},\"allow-lan\":{Convert.ToString(allowLan).ToLower()},\"mode\":\"{mode}\",\"log-level\":\"{logLevel}\"}}";
             // https://github.com/restsharp/RestSharp/issues/703
             request.AddParameter("application/json", jsonBody, ParameterType.RequestBody);
             var response = restClient.Execute(request);

@@ -389,6 +389,11 @@ namespace ClashW.Config
             }
         }
 
+        public void SetConfig(int port, int socksPort, bool allowLan, string mode, string logLevel)
+        {
+            clashApi.Config(port, socksPort, allowLan, mode, logLevel);
+        }
+
         public void SetOnlineRuleUrl(string onlineRuleUrl, int cycleHour)
         {
             var savedUrl = Properties.Settings.Default.OnlineRuleUrl;

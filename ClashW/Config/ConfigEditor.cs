@@ -130,6 +130,7 @@ namespace ClashW.Config
                 needRestartClash = true;
             }
             // api 修改
+            ConfigController.Instance.SetConfig(yamlConfig.Port, yamlConfig.SocksPort, yamlConfig.AllowLan, yamlConfig.Mode, yamlConfig.LogLevel);
             YalmConfigManager.Instance.SaveYamlConfigFile(yamlConfig);
             if(needRestartClash)
             {
