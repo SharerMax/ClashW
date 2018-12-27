@@ -18,7 +18,7 @@ namespace ClashW.View
 {
     public partial class DownloadClashForm : Form
     {
-        private const string CLASH_DOWNLOAD_URL = "https://github.com/Dreamacro/clash/releases/download/v0.9.1/clash-win64.zip";
+        private const string CLASH_DOWNLOAD_URL = "https://github.com/Dreamacro/clash/releases/download/v0.10.2/clash-win64.zip";
         private const string GEOIP_DOWNLOAD_URL = "https://geolite.maxmind.com/download/geoip/database/GeoLite2-Country.tar.gz";
  
         private WebClient clashWebClient;

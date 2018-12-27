@@ -97,7 +97,7 @@ namespace ClashW.Config.Api
         public void Config(int port, int socksPort, bool allowLan, string mode, string logLevel)
         {
             var request = new RestRequest($"configs");
-            request.Method = Method.PUT;
+            request.Method = Method.PATCH;
             var jsonBody = $"{{\"port\":{port}, \"socket-port\":{socksPort},\"allow-lan\":{Convert.ToString(allowLan).ToLower()},\"mode\":\"{mode}\",\"log-level\":\"{logLevel}\"}}";
             // https://github.com/restsharp/RestSharp/issues/703
             request.AddParameter("application/json", jsonBody, ParameterType.RequestBody);

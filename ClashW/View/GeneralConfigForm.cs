@@ -51,21 +51,26 @@ namespace ClashW.View
                     break;
 
             }
-            if(PortUtils.TcpPortIsUsed(httpPort))
+            var selfHttpPort = configController.GetListenedHttpProt();
+            var selfSocksPort = configController.GetListenedSocksPort();
+            var selfExternalPort = Convert.ToInt32(configController.GetExternalController().Split(':')[1]);
+            if (selfHttpPort != httpPort && PortUtils.TcpPortIsUsed(httpPort))
             {
                 MessageBox.Show($"端口冲突（{httpPort}）", "端口冲突", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            if (PortUtils.TcpPortIsUsed(socksPort))
+            if (selfSocksPort != socksPort && PortUtils.TcpPortIsUsed(socksPort))
             {
                 MessageBox.Show($"端口冲突（{socksPort}）", "端口冲突", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            if (PortUtils.TcpPortIsUsed(Convert.ToInt32(externalController.Split(':')[1])))
+            var extrnalPort = Convert.ToInt32(externalController.Split(':')[1]);
+
+            if (selfExternalPort != extrnalPort && PortUtils.TcpPortIsUsed(extrnalPort))
             {
-                MessageBox.Show($"端口冲突（{Convert.ToInt32(externalController.Split(':')[1])}）", "端口冲突", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"端口冲突（{extrnalPort}）", "端口冲突", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             configEditor.SetListenedHttpPort(httpPort);

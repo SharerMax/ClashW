@@ -102,7 +102,7 @@ namespace ClashW.Config.Yaml
             {
                 YamlConfig onlineRuleYamlConfig;
                 var yarmConfigFileStreamReader = new StreamReader(yarmConfigFileStream);
-                var deserializer = new DeserializerBuilder().Build();
+                var deserializer = new DeserializerBuilder().IgnoreUnmatchedProperties().Build();
                 onlineRuleYamlConfig = deserializer.Deserialize<YamlConfig>(yarmConfigFileStreamReader);
                 return onlineRuleYamlConfig;
             }

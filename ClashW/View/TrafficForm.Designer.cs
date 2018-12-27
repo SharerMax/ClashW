@@ -102,12 +102,16 @@
             this.trafficChart.Legends.Add(legend1);
             this.trafficChart.Location = new System.Drawing.Point(0, 87);
             this.trafficChart.Name = "trafficChart";
+            series1.BorderWidth = 2;
             series1.ChartArea = "TrafficChartArea";
             series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series1.Color = System.Drawing.Color.Orange;
             series1.Legend = "Legend1";
             series1.Name = "上传";
+            series2.BorderWidth = 2;
             series2.ChartArea = "TrafficChartArea";
             series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series2.Color = System.Drawing.Color.DodgerBlue;
             series2.Legend = "Legend1";
             series2.Name = "下载";
             this.trafficChart.Series.Add(series1);

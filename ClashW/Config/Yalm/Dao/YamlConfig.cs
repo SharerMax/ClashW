@@ -15,6 +15,6 @@ namespace ClashW.Config.Yaml.Dao
         [YamlMember(Alias = "Proxy Group", ApplyNamingConventions = false)]
         public List<ProxyGroup> ProxyGroups { get; set; }
         [YamlMember(Alias = "Rule", ApplyNamingConventions = false)]
-        public List<String> RuleList { get; set; }
+        public List<string> RuleList { get; set; }
     }
 }
